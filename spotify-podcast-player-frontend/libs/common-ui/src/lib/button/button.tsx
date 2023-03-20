@@ -1,13 +1,17 @@
 import styles from './button.module.scss';
 
 /* eslint-disable-next-line */
-export interface ButtonProps {}
+export interface ButtonProps {
+  onClick: () => void;
+  text: string;
+  disabled?: boolean;
+}
 
-export function Button(props: ButtonProps) {
+export function Button({ onClick, text, disabled = false }: ButtonProps) {
   return (
-    <div className={styles['container']}>
-      <h1>Welcome to Button!</h1>
-    </div>
+    <button onClick={onClick} disabled={disabled}>
+      {text}
+    </button>
   );
 }
 

@@ -10,7 +10,7 @@ import { Button } from '@spotify-podcast-player-frontend/common-ui';
 export function App() {
   return (
     <>
-      <Button />
+      <Button onClick={() => console.log("I'm a button")} text="Button" />
       <NxWelcome title="basic" />
 
       <div />
