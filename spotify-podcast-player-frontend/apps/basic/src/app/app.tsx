@@ -5,9 +5,12 @@ import NxWelcome from './nx-welcome';
 
 import { Route, Routes, Link } from 'react-router-dom';
 
+import { Button } from '@spotify-podcast-player-frontend/common-ui';
+
 export function App() {
   return (
     <>
+      <Button />
       <NxWelcome title="basic" />
 
       <div />
