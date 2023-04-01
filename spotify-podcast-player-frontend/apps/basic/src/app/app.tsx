@@ -1,29 +1,16 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
-
 import { Route, Routes, Link } from 'react-router-dom';
 
-import { Button } from '@spotify-podcast-player-frontend/common-ui';
-import { redirectToAuthCodeFlow } from '@spotify-podcast-player-frontend/spotify-api';
-
+import { Login } from '../pages';
 import Callback from './callback';
+
+import styles from './app.module.scss';
 
 export function App() {
   return (
     <>
       <Routes>
         <Route path="/callback" element={<Callback />} />
-        <Route
-          path="/"
-          element={
-            <div>
-              <Button
-                onClick={redirectToAuthCodeFlow}
-                text="Login with Spotify"
-              />
-            </div>
-          }
-        />
+        <Route path="/" element={<Login />} />
         <Route
           path="/main"
           element={
