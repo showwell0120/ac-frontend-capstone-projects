@@ -3,17 +3,26 @@
 | 屬性 | 描述 | 必填 | 預設值 | 資料型別 |   
 | --- | --- | --- | --- | --- |     
 | `id` | 使用者在 Spotify 上的 ID | yes | no | string |     
-| `collectedEpisodes` | 使用者收藏的 episode IDs | yes | [] | string[] |   
-| `createdAt` | 使用者註冊時間 | 系統自動生成	 | 當下時間戳記	 | Date |	   
+| `createdAt` | 使用者註冊時間 | 系統自動生成 | 當下時間戳記	 | Date |	   
+
+## UserFavorite
+| `userId` | 使用者在 Spotify 上的 ID, Foreign Key | yes | no | string |
+| `episodeId` | 使用者收藏的 Episode IDs | yes | no | string |   
+| `createdAt` | 建立分類的時間 | 系統自動生成 | 當下時間戳記 | Date |	
 
 ## Category Model
 | 屬性 | 描述 | 必填 | 預設值 | 資料型別 |
 | --- | --- | --- | --- | --- |
 | `id` | 分類 ID | yes | no | string |
+| `userId` | 使用者在 Spotify 上的 ID, Foreign Key | yes | no | string |
 | `name` | 分類的名稱 | yes | no | string |
-| `savedShows` | 儲存的 show IDs | yes | [] | string[] |
-| `createdAt` | 建立分類的時間 | 系統自動生成	 | 當下時間戳記	 | Date |	
-| `userId` | 使用者 ID | yes | no | string |
+| `createdAt` | 建立分類的時間 | 系統自動生成 | 當下時間戳記 | Date |	
+
+## CategoryShow Model
+| `userId` | 使用者在 Spotify 上的 ID, Foreign Key | yes | no | string |
+| `categoryId` | 使用者的分類 ID, Foreign Key | yes | no | string |
+| `showId` | 儲存的 show IDs | yes | no | string |   
+| `createdAt` | 建立分類的時間 | 系統自動生成 | 當下時間戳記 | Date |	
 
 
 # API
