@@ -32,22 +32,28 @@
 # API
 
 ## User
-### 1. `GET` 取得使用者資料 － `/api/user/<userId>`
+### 1. `GET` 取得使用者資料 － `/api/users/<userId>`
+
+Header
+```
+{
+    Authorization: Bearer <Token>
+}
+```
 
 有資料的 Response
 ```
 {
     id: string,
-    savedEpisodes: string[],
+    savedEpisodes: string[]
 }
 ```
 
-沒資料的 Response
-```
-{}
-```
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 404: User not found
 
-### 2. `POST` 建立使用者資料 － `/api/user`
+### 2. `POST` 建立使用者資料 － `/api/users`
 
 body
 ```
@@ -60,38 +66,75 @@ body
 ```
 {
     id: string,
-    savedEpisodes: string[],
+    favoriteEpisodeIds: string[],
+    token: string
 }
 ```
 
-### 3. `POST` 新增收藏的 episode － `/api/user/<userId>/collection`
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 409: User with id already exists
+
+### 3. `POST` 新增收藏的 episode － `/api/users/<userId>/episodes`
+
+Header
+```
+{
+    Authorization: Bearer <Token>
+}
+```
 
 body
 ```
 {
-    id: string, 
+    id: string
 }
 ```
 成功的 Response
 ```
-true
+{
+    success: true
+}
 ```
 
-### 4. `DELETE` 移除收藏的 episode － `/api/users/<userId>/collection`
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 409: User has already favorited this episode
+
+### 4. `DELETE` 移除收藏的 episode － `/api/users/<userId>/episodes/<episodeId>`
+
+Header
+```
+{
+    Authorization: Bearer <Token>
+}
+```
 
 body
 ```
-{
-    id: string, 
-}
+{}
 ```
 成功的 Response
 ```
-true
+{
+    success: true
+}
 ```
+
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 404: Episode is not liked by the user
+
 
 ## Category
-### 5. `GET` 取得分類資料 － `/api/categories/<userId>`
+### 5. `GET` 取得分類資料 － `/api/<userId>/categories`
+
+Header
+```
+{
+    Authorization: Bearer <Token>
+}
+```
 
 有資料的 Response
 ```
@@ -109,7 +152,18 @@ true
 []
 ```
 
-### 6. `POST` 新增分類 － `/api/categories/<userId>`
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+
+
+### 6. `POST` 新增分類 － `/api/<userId>/categories`
+
+Header
+```
+{
+    Authorization: Bearer <Token>
+}
+```
 
 body
 ```
@@ -119,10 +173,24 @@ body
 ```
 成功的 Response
 ```
-true
+{
+    success: true
+}
 ```
 
-### 7. `PUT` 更新分類名稱 － `/api/categories/<userId>/<categoryId>`
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 409: Category with the same name already exists
+
+
+### 7. `PUT` 更新分類名稱 － `/api/<userId>/categories/<categoryId>`
+
+Header
+```
+{
+    Authorization: Bearer <Token>
+}
+```
 
 body
 ```
@@ -132,32 +200,90 @@ body
 ```
 成功的 Response
 ```
-true
+{
+    success: true
+}
 ```
 
-### 8. `POST` 在分類下新增 show － `/api/categories/<userId>/<categoryId>`
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 404: Category with this ID cannot be found
+- HTTP 409: Category with the same name already exists
+
+
+### 8. `DELETE` 移除分類 － `/api/<userId>/categories/<categoryId>`
+
+Header
+```
+{
+    Authorization: Bearer <Token>
+}
+```
+
+body
+```
+{}
+```
+成功的 Response
+```
+{
+    success: true
+}
+```
+
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 404: Category with this ID cannot be found
+
+### 9. `POST` 在分類下新增 show － `/api/<userId>/categories/<categoryId>/shows`
+
+Header
+```
+{
+    Authorization: Bearer <Token>
+}
+```
 
 body
 ```
 {
-    id: string, 
+    id: string
 }
 ```
 成功的 Response
 ```
-true
+{
+    success: true
+}
 ```
 
-### 9. `DELETE` 在分類下移除 show － `/api/categories/<userId>/<categoryId>`
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 404: Category with this ID cannot be found
+- HTTP 409: Show has already been added to this category
+
+
+### 10. `DELETE` 在分類下移除 show － `/api/<userId>/categories/<categoryId>/shows/<showId>`
+
+Header
+```
+{
+    Authorization: Bearer <Token>
+}
+```
 
 body
 ```
-{
-    id: string, 
-}
-```
-成功的 Response
-```
-true
+{}
 ```
 
+成功的 Response
+```
+{
+    success: true
+}
+```
+
+Error Responses
+- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 404: Category or Show with this ID cannot be found
