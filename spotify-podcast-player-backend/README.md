@@ -3,7 +3,7 @@
 | 屬性 | 描述 | 必填 | 預設值 | 資料型別 |   
 | --- | --- | --- | --- | --- |     
 | `id` | 使用者在 Spotify 上的 ID | yes | no | string |     
-| `createdAt` | 使用者註冊時間 | 系統自動生成 | 當下時間戳記	 | Date |	   
+| `createdAt` | 使用者註冊時間 | 系統自動生成 | 當下時間戳記 | Date |	   
 
 ## UserFavorite
 | 屬性 | 描述 | 必填 | 預設值 | 資料型別 |
@@ -31,8 +31,24 @@
 
 # API
 
+
+## Introduction
+
+To use this API, you need to first obtain an Access Token from Spotify, and use
+the Spotify Access Token to create an account.
+
+Steps:
+- Complete [Spotify's tutorial][1] to obtain a Spotify access token
+- Create a user account by sending in your Spotify access token - see [建立使用者資料](### 2. `POST` 建立使用者資料 － `/api/users`)
+- You will receive another token back from this API service, keep this token for future use
+
+### Types of Access Tokens
+- **Spotify access token**: used to access Spotify's API
+- **API access token**: used to access this API service to access your categories, favorites, and shows
+
+
 ## User
-### 1. `GET` 取得使用者資料 － `/api/users/<userId>`
+### 1. `GET` 取得使用者資料 － `/api/me`
 
 Header
 ```
@@ -55,27 +71,36 @@ Error Responses
 
 ### 2. `POST` 建立使用者資料 － `/api/users`
 
+Use this to create an account on this API service using your Spotify Access
+Token. You will receive an API token to use this API service.
+
 body
 ```
 {
-    id: string, 
+    spotifyToken: string, 
 }
 ```
+
+`spotifyToken`: The access token you received from Spotify
 
 成功的 Response
 ```
 {
     id: string,
     favoriteEpisodeIds: string[],
-    token: string
+    apiToken: string
 }
 ```
 
-Error Responses
-- HTTP 403: Invalid token / Token does not belong to user
-- HTTP 409: User with id already exists
+`apiToken` is the token you need to access this API service.
+You need to keep your Spotify access token to use Spotify's APIs.
 
-### 3. `POST` 新增收藏的 episode － `/api/users/<userId>/episodes`
+
+Error Responses
+- HTTP 403: Invalid Spotify Access Token
+- HTTP 409: User with the same Spotify ID already exists
+
+### 3. `POST` 新增收藏的 episode － `/api/episodes`
 
 Header
 ```
@@ -87,7 +112,7 @@ Header
 body
 ```
 {
-    id: string
+    episodeId: string
 }
 ```
 成功的 Response
@@ -101,7 +126,7 @@ Error Responses
 - HTTP 403: Invalid token / Token does not belong to user
 - HTTP 409: User has already favorited this episode
 
-### 4. `DELETE` 移除收藏的 episode － `/api/users/<userId>/episodes/<episodeId>`
+### 4. `DELETE` 移除收藏的 episode － `/api/episodes/<episodeId>`
 
 Header
 ```
@@ -127,7 +152,7 @@ Error Responses
 
 
 ## Category
-### 5. `GET` 取得分類資料 － `/api/<userId>/categories`
+### 5. `GET` 取得分類資料 － `/api/categories`
 
 Header
 ```
@@ -138,25 +163,30 @@ Header
 
 有資料的 Response
 ```
-[
-    {
-        id: string,
-        name: string,
-        savedShows: string[]
-    }
-]
+{
+    categories:  [
+        {
+            id: string,
+            name: string,
+            savedShows: string[]
+        },
+        ...
+    ]
+}
 ```
 
 沒資料的 Response
 ```
-[]
+{
+    categories: []
+}
 ```
 
 Error Responses
 - HTTP 403: Invalid token / Token does not belong to user
 
 
-### 6. `POST` 新增分類 － `/api/<userId>/categories`
+### 6. `POST` 新增分類 － `/api/categories`
 
 Header
 ```
@@ -183,7 +213,7 @@ Error Responses
 - HTTP 409: Category with the same name already exists
 
 
-### 7. `PUT` 更新分類名稱 － `/api/<userId>/categories/<categoryId>`
+### 7. `PUT` 更新分類名稱 － `/api/categories/<categoryId>`
 
 Header
 ```
@@ -210,8 +240,7 @@ Error Responses
 - HTTP 404: Category with this ID cannot be found
 - HTTP 409: Category with the same name already exists
 
-
-### 8. `DELETE` 移除分類 － `/api/<userId>/categories/<categoryId>`
+### 8. `DELETE` 移除分類 － `/api/categories/<categoryId>`
 
 Header
 ```
@@ -220,10 +249,6 @@ Header
 }
 ```
 
-body
-```
-{}
-```
 成功的 Response
 ```
 {
@@ -232,10 +257,10 @@ body
 ```
 
 Error Responses
-- HTTP 403: Invalid token / Token does not belong to user
+- HTTP 403: Invalid token / Token / Category does not belong to user
 - HTTP 404: Category with this ID cannot be found
 
-### 9. `POST` 在分類下新增 show － `/api/<userId>/categories/<categoryId>/shows`
+### 9. `POST` 在分類下新增 show － `/api/categories/<categoryId>/shows`
 
 Header
 ```
@@ -263,7 +288,7 @@ Error Responses
 - HTTP 409: Show has already been added to this category
 
 
-### 10. `DELETE` 在分類下移除 show － `/api/<userId>/categories/<categoryId>/shows/<showId>`
+### 10. `DELETE` 在分類下移除 show － `/api/categories/<categoryId>/shows/<showId>`
 
 Header
 ```
@@ -287,3 +312,6 @@ body
 Error Responses
 - HTTP 403: Invalid token / Token does not belong to user
 - HTTP 404: Category or Show with this ID cannot be found
+
+
+[1]: https://developer.spotify.com/documentation/web-api/howtos/web-app-profile
