@@ -269,12 +269,6 @@ Header
 }
 ```
 
-body
-```
-{
-    id: string
-}
-```
 成功的 Response
 ```
 {
@@ -295,11 +289,6 @@ Header
 {
     Authorization: Bearer <Token>
 }
-```
-
-body
-```
-{}
 ```
 
 成功的 Response
