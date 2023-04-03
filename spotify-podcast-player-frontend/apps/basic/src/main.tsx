@@ -5,9 +5,14 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './app/app';
 
 // Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 // Bootstrap Bundle JS
-import "bootstrap/dist/js/bootstrap.bundle.min";
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
+if (import.meta.env.DEV) {
+  const { worker } = await import('./mocks/browser');
+  worker.start();
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -1,7 +1,6 @@
 import { Route, Routes, Link } from 'react-router-dom';
 
-import { Login } from '../pages';
-import Callback from './callback';
+import { Login, Callback } from '../pages';
 
 import styles from './app.module.scss';
 
