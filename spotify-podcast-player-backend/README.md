@@ -1,15 +1,16 @@
 # DB Schema
 ## User Model
-| 屬性 | 描述 | 必填 | 預設值 | 資料型別 |   
-| --- | --- | --- | --- | --- |     
-| `id` | 使用者在 Spotify 上的 ID | yes | no | string |     
-| `createdAt` | 使用者註冊時間 | 系統自動生成 | 當下時間戳記 | Date |	   
+| 屬性 | 描述 | 必填 | 預設值 | 資料型別 |
+| --- | --- | --- | --- | --- |
+| `id` | 使用者在 Spotify 上的 ID | yes | no | string |
+| `createdAt` | 使用者註冊時間 | 系統自動生成 | 當下時間戳記 | Date |
+
 
 ## UserFavorite
 | 屬性 | 描述 | 必填 | 預設值 | 資料型別 |
 | --- | --- | --- | --- | --- |
 | `userId` | 使用者在 Spotify 上的 ID, Foreign Key | yes | no | string |
-| `episodeId` | 使用者收藏的 Episode IDs | yes | no | string |   
+| `episodeId` | 使用者收藏的 Episode IDs | yes | no | string |
 | `createdAt` | 建立分類的時間 | 系統自動生成 | 當下時間戳記 | Date |	
 
 ## Category Model
@@ -25,8 +26,8 @@
 | --- | --- | --- | --- | --- |
 | `userId` | 使用者在 Spotify 上的 ID, Foreign Key | yes | no | string |
 | `categoryId` | 使用者的分類 ID, Foreign Key | yes | no | string |
-| `showId` | 儲存的 show IDs | yes | no | string |   
-| `createdAt` | 建立分類的時間 | 系統自動生成 | 當下時間戳記 | Date |	
+| `showID` | 儲存的 show ID | yes | no | string |
+| `createdAt` | 新增 show 到分類的時間 | 系統自動生成 | 當下時間戳記 | Date |	
 
 
 # API
