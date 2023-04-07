@@ -6,8 +6,8 @@
     "start": "node dist/spotify-podcast-player-backend/main.js",
     "serve": "nx serve",
     "build": "nx build",
-    "migratetest": "dotenv -e .env.test -- npx prisma migrate deploy",
-    "test": "dotenv -e .env.test nx test"
+    "migratetest": "npx prisma migrate deploy",
+    "test": "nx test"
   },
   "private": true,
   "dependencies": {
