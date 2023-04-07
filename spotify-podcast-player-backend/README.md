@@ -1,3 +1,28 @@
+# Backend README
+
+## Running the Server Locally
+
+1. Make sure MySQL is installed.
+2. Make a copy of `.env.example` to `.env`, eg. `cp .env.example .env`
+3. Update the contents of `.env` with the necessary environment variables
+
+## Running Tests
+
+Integration tests only - MySQL is required to run the tests.
+
+You can use `dotenv -e .env.test` to configure dotenv to use a different env
+file for running tests locally.
+
+For example:
+
+```
+# Only needed for the first time to migrate the DB schema
+dotenv -e .env.test npm run migratetest
+
+dotenv -e .env.test npm run test
+```
+
+
 # DB Schema
 ## User Model
 | 屬性 | 描述 | 必填 | 預設值 | 資料型別 |
