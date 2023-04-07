@@ -1,11 +1,13 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
+dist/
 tmp
 /out-tsc
 
 # dependencies
 node_modules
+.env
 
 # IDEs and editors
 /.idea
@@ -32,6 +34,8 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+local.db
+local.db-journal
 
 # System Files
 .DS_Store
