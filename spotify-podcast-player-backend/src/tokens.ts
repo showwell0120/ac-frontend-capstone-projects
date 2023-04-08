@@ -1,22 +1,22 @@
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 
-const TOKEN_SECRET = process.env.TOKEN_SECRET;
+const TOKEN_SECRET = process.env.TOKEN_SECRET
 
 function generateAccessToken(userId: string): string {
-  return jwt.sign({ userId: userId }, TOKEN_SECRET, { expiresIn: '6h' });
+  return jwt.sign({ userId: userId }, TOKEN_SECRET, { expiresIn: '6h' })
 }
 
 function verifyAccessToken(token: string): string | null {
-  let userId = null;
+  let userId = null
 
   jwt.verify(token, TOKEN_SECRET, (err, user) => {
     if (!err) {
-      userId = user.userId;
+      userId = user.userId
     } else {
-      console.log('Error verifying token');
+      console.log('Error verifying token')
     }
-  });
-  return userId;
+  })
+  return userId
 }
 
-export { generateAccessToken, verifyAccessToken };
+export { generateAccessToken, verifyAccessToken }

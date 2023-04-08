@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from 'axios'
 
-const PROFILE_URL = 'https://api.spotify.com/v1/me';
+const PROFILE_URL = 'https://api.spotify.com/v1/me'
 
 export default async function getSpotifyProfile(
   access_token: string
@@ -9,13 +9,13 @@ export default async function getSpotifyProfile(
     headers: {
       Authorization: 'Bearer ' + access_token,
     },
-  };
+  }
 
   try {
-    const resp = await axios.get(PROFILE_URL, config);
-    return resp.data.id;
+    const resp = await axios.get(PROFILE_URL, config)
+    return resp.data.id
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
 }
