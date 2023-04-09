@@ -1,0 +1,44 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  test_backend:
+    env:
+      DB_DATABASE: spotify_test
+      DB_USERNAME: root
+      DB_HOST: 127.0.0.1
+      DB_PASSWORD: root
+      DATABASE_URL: mysql://root:root@127.0.0.1/spotify_test
+      WORKING_DIR: ./spotify-podcast-player-backend
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Set up MySQL
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USERNAME }} -p${{ env.DB_PASSWORD }}
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: npm install
+      run: |
+        npm install
+      working-directory: ${{ env.WORKING_DIR }}
+    - name: DB migration
+      run: |
+        npm run migratetest
+      working-directory: ${{ env.WORKING_DIR }}
+    - name: npm test
+      run: |
+        npm test
+      working-directory: ${{ env.WORKING_DIR }}
