@@ -8,7 +8,7 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   testMatch: [
-    '<rootDir>/tests/**/*.[jt]s?(x)',
+    '<rootDir>/tests/**/*.test.[jt]s?(x)',
     '<rootDir>/src/**/__tests__/**/*.[jt]s?(x)',
     '<rootDir>/src/**/*(*.)@(spec|test).[jt]s?(x)',
   ],

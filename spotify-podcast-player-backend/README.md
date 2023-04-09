@@ -95,10 +95,11 @@ Error Responses
 - HTTP 403: Invalid token / Token does not belong to user
 - HTTP 404: User not found
 
-### 2. `POST` 建立使用者資料 － `/api/users`
+### 2. `POST` 建立使用者資料 / 取得新的 API Access Token － `/api/users`
 
 Use this to create an account on this API service using your Spotify Access
-Token. You will receive an API token to use this API service.
+Token, or to get a new API Access Token. You will receive an API token to use
+this API service.
 
 body
 ```
@@ -124,7 +125,6 @@ You need to keep your Spotify access token to use Spotify's APIs.
 
 Error Responses
 - HTTP 403: Invalid Spotify Access Token
-- HTTP 409: User with the same Spotify ID already exists
 
 ### 3. `POST` 新增收藏的 episode － `/api/episodes`
 
@@ -294,6 +294,13 @@ Header
     Authorization: Bearer <Token>
 }
 ```
+
+body
+```
+{
+    showId: string, 
+}
+
 
 成功的 Response
 ```
