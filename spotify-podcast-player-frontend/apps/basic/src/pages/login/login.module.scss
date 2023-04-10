@@ -5,3 +5,37 @@
  * .container {
  * }
 */
+
+.left-col {
+    gap: 2.5rem;
+    .logo {
+        gap: 1rem;
+        .slogan {
+            font-size: 1.125rem;
+            font-family: Montserrat;
+            color: #111111;
+        }
+    }
+    .login {
+        gap: 1.5625rem;
+        .button {
+            color: #fff;
+            --bs-btn-padding-y: 1.5625rem;
+            --bs-btn-padding-x: 7.875rem;
+            --bs-btn-font-size: 1rem;
+            --bs-btn-border-radius: 1rem; 
+        }
+        .signup {
+            color: #3E3E3E;
+            a {
+                text-decoration: none;
+                font-weight: 700;
+                color: #3E3E3E;
+            }
+        }
+    }
+}
+
+.right-col {
+    padding: 0;
+}

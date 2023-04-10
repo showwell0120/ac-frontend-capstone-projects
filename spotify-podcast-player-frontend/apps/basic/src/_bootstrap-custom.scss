@@ -1,0 +1,14 @@
+/* make the customizations */
+$theme-colors: (
+    "primary": #FF7F50,
+    "secondary": #30A9DE,
+    "success": #4CAF50,
+    "danger": #FF5050,
+    "warning": #F6AE2D,
+    "spotify":#1ED760
+);
+
+
+
+/* import bootstrap to set changes */
+@import "bootstrap/scss/bootstrap";

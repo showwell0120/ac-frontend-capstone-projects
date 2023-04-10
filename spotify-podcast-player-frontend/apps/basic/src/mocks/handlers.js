@@ -1,40 +1,129 @@
 import { rest } from 'msw';
 
+let userData = {
+  id: '11120956345',
+  favoriteEpisodeIds: [],
+};
+
+let categories = [
+  {
+    id: '1',
+    name: '通勤中',
+    savedShows: [],
+  },
+  {
+    id: '2',
+    name: '工作中',
+    savedShows: [],
+  },
+  {
+    id: '3',
+    name: '睡覺前',
+    savedShows: [],
+  },
+];
+
+// 取得使用者資料
+const getUser = rest.get('/api/me', (req, res, ctx) => {
+  return res(
+    ctx.json({
+      ...userData,
+    })
+  );
+});
+
+// 建立使用者資料
+const addUser = rest.post('/api/users', (req, res, ctx) => {
+  return res(
+    ctx.json({
+      ...userData,
+      apiToken: 'cn4hr42fhajfndm3oi1ECNWIGFWEKDJOHVR',
+    })
+  );
+});
+
+// 新增收藏的 episode
+const addFavoriteEpisode = rest.post('/api/episodes', (req, res, ctx) => {
+  userData.favoriteEpisodeIds = [req.params.id, ...userData.favoriteEpisodeIds];
+  return res(
+    ctx.json({
+      success: true,
+    })
+  );
+});
+
+// 移除收藏的 episode
+const deleteFavoriteEpisode = rest.delete(
+  'api/episodes/:episodeId',
+  (req, res, ctx) => {
+    userData.favoriteEpisodeIds = userData.favoriteEpisodeIds.filter(
+      (id) => id !== req.params.episodeId
+    );
+    return res(
+      ctx.json({
+        success: true,
+      })
+    );
+  }
+);
+
+// 取得分類資料
+const getCategories = rest.get('api/categories', (req, res, ctx) => {
+  return res(
+    ctx.json({
+      categories,
+    })
+  );
+});
+
+// 新增分類
+const addCategory = rest.post('api/categories', (req, res, ctx) => {
+  return res(
+    ctx.json({
+      success: true,
+    })
+  );
+});
+
+// 更新分類名稱
+const updateCategory = rest.put(
+  'api/categories/:categoryId',
+  (req, res, ctx) => {
+    return res(
+      ctx.json({
+        success: true,
+      })
+    );
+  }
+);
+
+// 移除分類
+const deleteCategory = rest.delete(
+  'api/categories/:categoryId',
+  (req, res, ctx) => {
+    return res(
+      ctx.json({
+        success: true,
+      })
+    );
+  }
+);
+
+const addShow = rest.post(
+  'api/categories/:categoryId/shows',
+  (req, res, ctx) => {
+    return res(ctx.json({}));
+  }
+);
+
 export const handlers = [
-  // 取得使用者資料
-  rest.get('/api/me', (req, res, ctx) => {
-    return res(ctx.json({}));
-  }),
-  // 建立使用者資料
-  rest.post('/api/users', (req, res, ctx) => {
-    return res(ctx.json({}));
-  }),
-  // 新增收藏的 episode
-  rest.post('/api/episodes', (req, res, ctx) => {
-    return res(ctx.json({}));
-  }),
-  // 移除收藏的 episode
-  rest.delete('api/episodes/:episodeId', (req, res, ctx) => {
-    return res(ctx.json({}));
-  }),
-  // 取得分類資料
-  rest.get('api/categories', (req, res, ctx) => {
-    return res(ctx.json({}));
-  }),
-  // 新增分類
-  rest.post('api/categories', (req, res, ctx) => {
-    return res(ctx.json({}));
-  }),
-  // 更新分類名稱
-  rest.put('api/categories/:categoryId', (req, res, ctx) => {
-    return res(ctx.json({}));
-  }),
-  // 移除分類
-  rest.delete('api/categories/:categoryId', (req, res, ctx) => {
-    return res(ctx.json({}));
-  }),
-  // 在分類下新增 show
-  rest.post('api/categories/:categoryId/shows', (req, res, ctx) => {
-    return res(ctx.json({}));
-  }),
+  getUser,
+  addUser,
+  addFavoriteEpisode,
+  deleteFavoriteEpisode,
+  getCategories,
+  addCategory,
+  updateCategory,
+  deleteCategory,
+  addShow,
 ];
