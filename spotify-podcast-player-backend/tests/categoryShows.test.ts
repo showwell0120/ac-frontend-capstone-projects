@@ -3,16 +3,9 @@ import { prisma } from '../src/database'
 import app from '../src/app'
 import { getAuthHeader } from './helpers'
 
-afterEach(async () => {
-  await prisma.userFavorite.deleteMany({})
-  await prisma.categoryShow.deleteMany({})
-  await prisma.category.deleteMany({})
-  await prisma.user.deleteMany({})
-})
-
 test('add categoryShow', async () => {
   const user = await prisma.user.create({
-    data: { id: 'someuniqueid' },
+    data: { id: 'someuniqueidaddcategoryshow' },
   })
   const authHeader = getAuthHeader(user.id)
   const category = await prisma.category.create({
@@ -40,11 +33,15 @@ test('add categoryShow', async () => {
     .send()
   expect(resp.status).toBe(200)
   expect(resp.body.categories[0].savedShows[0].id).toBe(data.showId)
+
+  await prisma.categoryShow.deleteMany({where : {showId: data.showId}})
+  await prisma.category.deleteMany({where : {userId: user.id}})
+  await prisma.user.delete({where : {id: user.id}})
 })
 
-test('delete category', async () => {
+test('delete categoryshow', async () => {
   const user = await prisma.user.create({
-    data: { id: 'someuniqueid' },
+    data: { id: 'someuniqueiddeletecategoryshow' },
   })
   const authHeader = getAuthHeader(user.id)
   const category = await prisma.category.create({
@@ -77,4 +74,8 @@ test('delete category', async () => {
     .set('Authorization', authHeader)
     .send()
   expect(resp.status).toBe(404)
+
+  await prisma.categoryShow.deleteMany({where : {userId: user.id}})
+  await prisma.category.deleteMany({where : {userId: user.id}})
+  await prisma.user.delete({where : {id: user.id}})
 })
