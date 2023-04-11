@@ -3,16 +3,9 @@ import { prisma } from '../src/database'
 import app from '../src/app'
 import { getAuthHeader } from './helpers'
 
-afterEach(async () => {
-  await prisma.userFavorite.deleteMany({})
-  await prisma.categoryShow.deleteMany({})
-  await prisma.category.deleteMany({})
-  await prisma.user.deleteMany({})
-})
-
 test('add category', async () => {
   const user = await prisma.user.create({
-    data: { id: 'someuniqueid' },
+    data: { id: 'someuniqueidaddcategory' },
   })
   const authHeader = getAuthHeader(user.id)
   const data = { name: 'Category A' }
@@ -34,11 +27,14 @@ test('add category', async () => {
     where: { userId: user.id },
   })
   expect(count).toBe(1)
+
+  await prisma.category.deleteMany({where : {userId: user.id}})
+  await prisma.user.delete({where : {id: user.id}})
 })
 
 test('delete category', async () => {
   const user = await prisma.user.create({
-    data: { id: 'someuniqueid' },
+    data: { id: 'someuniqueiddeletecategory' },
   })
   const authHeader = getAuthHeader(user.id)
   const data = { name: 'category A' }
@@ -64,11 +60,14 @@ test('delete category', async () => {
     where: { userId: user.id },
   })
   expect(count).toBe(0)
+
+  await prisma.category.deleteMany({where : {userId: user.id}})
+  await prisma.user.delete({where : {id: user.id}})
 })
 
 test('update category', async () => {
   const user = await prisma.user.create({
-    data: { id: 'someuniqueid' },
+    data: { id: 'someuniqueidupdatecategory' },
   })
   const authHeader = getAuthHeader(user.id)
   const data = { name: 'category A' }
@@ -95,11 +94,14 @@ test('update category', async () => {
     .set('Authorization', authHeader)
     .send(data)
   expect(resp.status).toBe(409)
+
+  await prisma.category.deleteMany({where : {userId: user.id}})
+  await prisma.user.delete({where : {id: user.id}})
 })
 
 test('list categories', async () => {
   const user = await prisma.user.create({
-    data: { id: 'someuniqueid' },
+    data: { id: 'someuniqueidlistcategory' },
   })
   const authHeader = getAuthHeader(user.id)
 
@@ -128,4 +130,7 @@ test('list categories', async () => {
   const ids = resp.body.categories.map((c) => c.id)
   expect(ids).toContain(category.id.toString())
   expect(ids).toContain(category2.id.toString())
+
+  await prisma.category.deleteMany({where : {userId: user.id}})
+  await prisma.user.delete({where : {id: user.id}})
 })

@@ -1,26 +1,17 @@
 import { prisma } from '../src/database'
 
-afterEach(async () => {
-  await prisma.userFavorite.deleteMany({})
-  await prisma.categoryShow.deleteMany({})
-  await prisma.category.deleteMany({})
-  await prisma.user.deleteMany({})
-})
-
 test('user model', async () => {
-  const users = await prisma.user.findMany({})
-  expect(users.length).toBe(0)
-
   const user = await prisma.user.create({
-    data: { id: 'someuniqueid' },
+    data: { id: 'someuniqueidaddusermodel' },
   })
 
   expect(user.createdAt).toBeDefined()
+  await prisma.user.delete({ where: { id: user.id } })
 })
 
 test('userfavorite model', async () => {
   const user = await prisma.user.create({
-    data: { id: 'someuniqueid' },
+    data: { id: 'someuniqueidadduserfave' },
   })
 
   const fave = await prisma.userFavorite.create({
@@ -32,6 +23,9 @@ test('userfavorite model', async () => {
 
   expect(fave.createdAt).toBeDefined()
   expect(fave.userId).toBe(user.id)
+
+  await prisma.userFavorite.deleteMany({ where: { userId: user.id } })
+  await prisma.user.delete({ where: { id: user.id } })
 })
 
 test('category model', async () => {
@@ -51,6 +45,9 @@ test('category model', async () => {
   expect(category.createdAt).toBeDefined()
   expect(category.userId).toBe(user.id)
   expect(category.name).toBe(categoryName)
+
+  await prisma.category.deleteMany({ where: { userId: user.id } })
+  await prisma.user.delete({ where: { id: user.id } })
 })
 
 test('categoryshow model', async () => {
@@ -79,4 +76,8 @@ test('categoryshow model', async () => {
   expect(categoryShow.userId).toBe(user.id)
   expect(categoryShow.categoryId).toBe(category.id)
   expect(categoryShow.showId).toBe(showId)
+
+  await prisma.categoryShow.deleteMany({ where: { userId: user.id } })
+  await prisma.category.deleteMany({ where: { userId: user.id } })
+  await prisma.user.delete({ where: { id: user.id } })
 })
