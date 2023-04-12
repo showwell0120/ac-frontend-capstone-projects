@@ -1,11 +1,10 @@
 import { generateAccessToken } from '../tokens'
 import { prisma } from '../database'
-//import getSpotifyProfile from './spotify'
+import getSpotifyProfile from '../spotify'
 
 const createUser = async (req, res) => {
-  //const spotifyId = await getSpotifyProfile('hello')
-  // TODO remove hardcoded spotifyId
-  const spotifyId = 'helloworld1234'
+  const spotifyId = await getSpotifyProfile(req.body.spotifyToken)
+  //const spotifyId = req.body.spotifyToken
 
   if (spotifyId === null) {
     res.send({
