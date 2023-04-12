@@ -5,61 +5,65 @@
  * .container {
  * }
 */
-
-.left-col {
-    gap: 2.5rem;
-    .logo {
-        gap: 1rem;
-        .slogan {
-            font-size: 1.125rem;
-            font-family: Montserrat;
-            color: #111111;
+.page-row {
+    // height: 100vh;
+    // min-height: 1024px !important;
+    .left-col {
+        gap: 2.5rem;
+        .logo {
+            gap: 1rem;
+            .slogan {
+                font-size: 1.125rem;
+                font-family: Montserrat;
+                color: #111111;
+            }
         }
-    }
-    .login {
-        gap: 1.5625rem;
-        .button {
-            color: #fff;
-            --bs-btn-padding-y: 1.5625rem;
-            --bs-btn-padding-x: 7.875rem;
-            --bs-btn-font-size: 1rem;
-            --bs-btn-border-radius: 1rem; 
-        }
-        .signup {
-            color: #3E3E3E;
-            a {
-                text-decoration: none;
-                font-weight: 700;
+        .login {
+            gap: 1.5625rem;
+            .button {
+                color: #fff;
+                --bs-btn-padding-y: 1.5625rem;
+                --bs-btn-padding-x: 7.875rem;
+                --bs-btn-font-size: 1rem;
+                --bs-btn-border-radius: 1rem; 
+            }
+            .signup {
                 color: #3E3E3E;
+                a {
+                    text-decoration: none;
+                    font-weight: 700;
+                    color: #3E3E3E;
+                }
+            }
+        }
+    }
+
+    .right-col {
+        padding: 0;
+        .item-wrap {
+            padding-top: 6.4375rem;
+            gap: 3.4375rem;
+            .img-wrap {
+                aspect-ratio: 1 / 1;
+                .img-blur {
+                    filter: blur(41.8502px);
+                    border-radius: 1.5rem;
+                }
+            }
+            .caption {
+                right: initial;
+                bottom: initial;
+                left: initial;
+                padding-top: 0;
+                padding-bottom: 0;
+                .title {
+                    font-weight: 700;
+                }
+                .desc {
+                    margin-top: 1rem;
+                }
             }
         }
     }
 }
 
-.right-col {
-    padding: 0;
-    .item-wrap {
-        padding-top: 6.4375rem;
-        gap: 3.4375rem;
-        .img-wrap {
-            aspect-ratio: 1 / 1;
-            .img-blur {
-                filter: blur(41.8502px);
-                border-radius: 1.5rem;
-            }
-        }
-        .caption {
-            right: initial;
-            bottom: initial;
-            left: initial;
-            padding-top: 0;
-            padding-bottom: 0;
-            .title {
-                font-weight: 700;
-            }
-            .desc {
-                margin-top: 1rem;
-            }
-        }
-    }
-}

@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
@@ -32,7 +33,7 @@ export interface LoginProps {}
 
 export function Login(props: LoginProps) {
   return (
-    <Row className="vh-100 m-0">
+    <Row className={classNames('m-0', styles['page-row'])}>
       <Col className={classNames(flexColCenter, 'p-0', styles['left-col'])}>
         <div className={classNames(flexColCenter, styles['logo'])}>
           <img
