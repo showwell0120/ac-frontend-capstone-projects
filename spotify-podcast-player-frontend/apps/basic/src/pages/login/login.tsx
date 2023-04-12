@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 import { redirectToAuthCodeFlow } from '@spotify-podcast-player-frontend/spotify-api';
 
-import { flexColCenter } from '../../bootstrap-shortcuts';
+import { flexColCenter } from '../../bootstrap-classnames';
 import styles from './login.module.scss';
 
 const features = [
@@ -32,8 +32,8 @@ export interface LoginProps {}
 
 export function Login(props: LoginProps) {
   return (
-    <Row className="vh-100">
-      <Col className={classNames(flexColCenter, styles['left-col'])}>
+    <Row className="vh-100 m-0">
+      <Col className={classNames(flexColCenter, 'p-0', styles['left-col'])}>
         <div className={classNames(flexColCenter, styles['logo'])}>
           <img
             className="d-block w-50 mb-6"
@@ -66,7 +66,7 @@ export function Login(props: LoginProps) {
           </div>
         </div>
       </Col>
-      <Col className={styles['right-col']}>
+      <Col className={classNames('p-0', styles['right-col'])}>
         <Carousel className="vh-100">
           {features.map((feature, index) => (
             <Carousel.Item
@@ -75,28 +75,38 @@ export function Login(props: LoginProps) {
               style={{ backgroundColor: feature.bgColor }}
             >
               <div
-                className="position-absolute d-flex justify-content-center align-items-center w-100"
-                style={{
-                  top: 0,
-                  bottom: 0,
-                }}
+                className={classNames(
+                  'd-flex flex-column justify-content-start align-items-center w-100 h-100',
+                  styles['item-wrap']
+                )}
               >
-                <img
-                  className="w-50 position-absolute"
-                  src={`./images/app-feature-${index + 1}.png`}
-                  alt={feature.title}
-                  style={{ filter: 'blur(41.8502px)', borderRadius: 24 }}
-                />
-                <img
-                  className="w-50 position-absolute"
-                  src={`./images/app-feature-${index + 1}.png`}
-                  alt={feature.title}
-                />
+                <div
+                  className={classNames(
+                    'w-50 position-relative',
+                    styles['img-wrap']
+                  )}
+                >
+                  <img
+                    className={classNames(
+                      'w-100 h-100 position-absolute',
+                      styles['img-blur']
+                    )}
+                    src={`./images/app-feature-${index + 1}.png`}
+                    alt={feature.title}
+                  />
+                  <img
+                    className="w-100 h-100 position-absolute"
+                    src={`./images/app-feature-${index + 1}.png`}
+                    alt={feature.title}
+                  />
+                </div>
+                <Carousel.Caption
+                  className={classNames('position-relative', styles['caption'])}
+                >
+                  <h1 className={styles['title']}>{feature.title}</h1>
+                  <p className={styles['desc']}>{feature.description}</p>
+                </Carousel.Caption>
               </div>
-              <Carousel.Caption>
-                <h3>{feature.title}</h3>
-                <p>{feature.description} </p>
-              </Carousel.Caption>
             </Carousel.Item>
           ))}
         </Carousel>

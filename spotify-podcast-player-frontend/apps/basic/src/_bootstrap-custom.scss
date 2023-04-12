@@ -12,3 +12,8 @@ $theme-colors: (
 
 /* import bootstrap to set changes */
 @import "bootstrap/scss/bootstrap";
+
+// override bootstrap
+.carousel-indicators {
+    bottom: 8.5625rem;
+}

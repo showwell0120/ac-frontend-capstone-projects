@@ -38,4 +38,28 @@
 
 .right-col {
     padding: 0;
+    .item-wrap {
+        padding-top: 6.4375rem;
+        gap: 3.4375rem;
+        .img-wrap {
+            aspect-ratio: 1 / 1;
+            .img-blur {
+                filter: blur(41.8502px);
+                border-radius: 1.5rem;
+            }
+        }
+        .caption {
+            right: initial;
+            bottom: initial;
+            left: initial;
+            padding-top: 0;
+            padding-bottom: 0;
+            .title {
+                font-weight: 700;
+            }
+            .desc {
+                margin-top: 1rem;
+            }
+        }
+    }
 }
