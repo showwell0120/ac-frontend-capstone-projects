@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "npx nx run basic:serve",
+    "storybook": "npx nx storybook basic",
     "component": "npx nx g component --project=basic --dir=$npm_config_dir $npm_config_name"
   },
   "private": true,
@@ -18,7 +19,11 @@
     "@nrwl/react": "15.9.2",
     "@nrwl/storybook": "15.9.2",
     "@nrwl/vite": "15.9.2",
+    "@nrwl/web": "15.9.2",
     "@nrwl/workspace": "15.9.2",
+    "@storybook/addon-essentials": "^7.0.0-rc.0",
+    "@storybook/core-server": "^7.0.0-rc.0",
+    "@storybook/react-vite": "^7.0.0-rc.0",
     "@testing-library/react": "14.0.0",
     "@types/jest": "^29.4.0",
     "@types/node": "18.14.2",
@@ -70,4 +75,3 @@
     "workerDirectory": "apps/basic/public"
   }
 }
-
