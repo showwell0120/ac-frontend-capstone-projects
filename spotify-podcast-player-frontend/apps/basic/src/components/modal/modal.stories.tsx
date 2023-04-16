@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { Meta } from '@storybook/react';
 import Modal, { ModalProps } from './modal';
 
-const ModalInstance = (props: ModalProps) => {
+const ModalInstance = (props: Omit<ModalProps, 'show' | 'onClose'>) => {
   const [show, setShow] = useState(true);
-
-  useEffect(() => setShow(props.show), [props.show]);
 
   return (
     <div
@@ -16,9 +14,7 @@ const ModalInstance = (props: ModalProps) => {
           "url('https://cdn.pixabay.com/photo/2018/04/05/14/09/sunflowers-3292932_960_720.jpg')",
       }}
     >
-      <Modal show={show} onClose={() => setShow(false)}>
-        {props.children}
-      </Modal>
+      <Modal show={show} onClose={() => setShow(false)} {...props}></Modal>
     </div>
   );
 };
@@ -29,9 +25,30 @@ const Story: Meta<typeof ModalInstance> = {
 };
 export default Story;
 
-export const Primary = {
+export const Simple = {
   args: {
     children: <div>Hello World</div>,
-    show: true,
+  },
+};
+
+export const HasTitle = {
+  args: {
+    title: 'Title',
+    children: <div>Hello World</div>,
+  },
+};
+
+export const HasButtons = {
+  args: {
+    title: 'Title',
+    children: <div>Hello World</div>,
+    buttonProps: [
+      {
+        variant: 'none',
+        children: '取消',
+        onClick: () => alert('cancel'),
+      },
+      { variant: 'primary', children: '確認', onClick: () => alert('submit') },
+    ],
   },
 };

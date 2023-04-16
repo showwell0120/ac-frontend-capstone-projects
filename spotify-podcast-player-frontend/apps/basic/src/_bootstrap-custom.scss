@@ -12,3 +12,26 @@ $theme-colors: (
 
 /* import bootstrap to set changes */
 @import "bootstrap/scss/bootstrap";
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12.5px);
+  &.show {
+    opacity: initial;
+  }
+}
+
+.modal-container {
+    &.no-title {
+        .modal-header {
+            border-bottom: none;
+        }
+        .modal-body {
+            margin-top: -3rem;
+        }
+    }
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+}
