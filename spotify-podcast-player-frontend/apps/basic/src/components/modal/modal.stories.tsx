@@ -21,7 +21,7 @@ const ModalInstance = (props: Omit<ModalProps, 'show' | 'onClose'>) => {
 
 const Story: Meta<typeof ModalInstance> = {
   component: ModalInstance,
-  title: 'Modal',
+  title: 'Modal/Base',
 };
 export default Story;
 
