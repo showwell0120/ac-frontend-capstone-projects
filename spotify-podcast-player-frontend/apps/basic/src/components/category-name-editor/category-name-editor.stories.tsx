@@ -2,7 +2,7 @@ import type { Meta } from '@storybook/react';
 import { AppProvider, useAppContext, ModalMap } from '../../contexts/app';
 import { CategoryNameEditorModal } from './category-name-editor';
 
-const Wrapper = (props: { categoryName: string }) => {
+const Wrapper = (props: { categoryName: string; title: string }) => {
   const { openModal } = useAppContext();
 
   return (
@@ -11,6 +11,7 @@ const Wrapper = (props: { categoryName: string }) => {
         Show CategoryNameEditorModal
       </button>
       <CategoryNameEditorModal
+        title={props.title}
         categoryName={props.categoryName}
         onSubmit={(name) => alert(name)}
       />
@@ -18,7 +19,7 @@ const Wrapper = (props: { categoryName: string }) => {
   );
 };
 
-const App = (props: { categoryName: string }) => {
+const App = (props: { categoryName: string; title: string }) => {
   return (
     <AppProvider>
       <Wrapper {...props} />
@@ -32,14 +33,16 @@ const Story: Meta<typeof App> = {
 };
 export default Story;
 
-export const Empty = {
+export const CreateCategory = {
   args: {
     categoryName: '',
+    title: '新增分類',
   },
 };
 
-export const HasDefaultValue = {
+export const EditCategoryName = {
   args: {
     categoryName: '1f423:我的 Podcast',
+    title: '編輯分類名稱',
   },
 };

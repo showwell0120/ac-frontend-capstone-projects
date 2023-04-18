@@ -30,7 +30,11 @@ export function Modal(props: ModalProps) {
       {props?.buttonProps?.length && (
         <BootstrapModal.Footer>
           {props.buttonProps?.map((props, index) => (
-            <Button key={`modal-button-${index}`} {...props}>
+            <Button
+              key={`modal-button-${index}`}
+              {...props}
+              style={{ width: 200 }}
+            >
               {props.children}
             </Button>
           ))}

@@ -65,6 +65,7 @@ export function CategoryNameEditor(props: CategoryNameEditorProps) {
 }
 
 export interface CategoryNameEditorModalProps {
+  title: string;
   categoryName: string;
   onSubmit: (categoryName: string) => void;
 }
@@ -107,7 +108,7 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
 
   return (
     <Modal
-      title="編輯名稱"
+      title={props.title}
       show={modal === ModalMap.CategoryNameEditor}
       buttonProps={buttons}
       onClose={closeModal}
