@@ -9,8 +9,8 @@ import './styles.scss';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 if (import.meta.env.DEV) {
-  const { worker } = await import('./mocks/browser');
-  worker.start();
+  // const { worker } = await import('./mocks/browser');
+  // worker.start();
 }
 
 const root = ReactDOM.createRoot(

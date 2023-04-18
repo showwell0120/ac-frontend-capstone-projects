@@ -4,6 +4,7 @@ import {
   getTokenInfo,
   fetchProfile,
 } from '@spotify-podcast-player-frontend/spotify-api';
+import { fetchUser } from '@spotify-podcast-player-frontend/backend-api';
 
 /**
  * Show progress dialog
@@ -17,7 +18,10 @@ export function Callback() {
     // TODO: context
     const tokenInfo = await getTokenInfo(code);
     const profile = await fetchProfile(tokenInfo.access_token);
-    console.log(profile);
+    const user = await fetchUser(tokenInfo.access_token);
+    console.log('Spotify token: ', tokenInfo);
+    console.log('Spotify profile: ', profile);
+    console.log('Backend user: ', user);
   };
 
   React.useEffect(() => {
