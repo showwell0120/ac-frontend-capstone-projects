@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 export const ModalMap = {
-  CategoryNameEditor: Symbol('CategoryNameEditor'), // eslint-disable-line no-undef
+  CategoryNameEditor: Symbol('CategoryNameEditor'),
+  CategoryRemovePrompt: Symbol('CategoryRemovePrompt'),
 };
 
 interface AppProps {

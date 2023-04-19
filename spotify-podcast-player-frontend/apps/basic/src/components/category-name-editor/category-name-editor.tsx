@@ -4,13 +4,9 @@ import EmojiPicker, { EmojiClickData, Emoji } from 'emoji-picker-react';
 
 import Modal from '../modal/modal';
 import { useAppContext, ModalMap } from '../../contexts/app';
+import { CategoryName, mergeCategoryName, splitCategoryName } from '../../util';
 
 import styles from './category-name-editor.module.scss';
-
-export interface CategoryName {
-  emoji: string;
-  text: string;
-}
 
 /* eslint-disable-next-line */
 export interface CategoryNameEditorProps {
@@ -68,15 +64,6 @@ export interface CategoryNameEditorModalProps {
   title: string;
   categoryName: string;
   onSubmit: (categoryName: string) => void;
-}
-
-function splitCategoryName(categoryName: string): CategoryName {
-  const [emoji, text] = categoryName.split(':');
-  return { emoji, text };
-}
-
-function mergeCategoryName(categoryName: CategoryName): string {
-  return Object.values(categoryName).join(':');
 }
 
 export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
