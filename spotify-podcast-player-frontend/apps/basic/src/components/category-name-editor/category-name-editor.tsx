@@ -27,7 +27,7 @@ export function CategoryNameEditor(props: CategoryNameEditorProps) {
   };
 
   return (
-    <div className={styles['container']}>
+    <div className="input-container">
       <div
         className="position-relative"
         onClick={() => setShowEmojiPicker((preState) => !preState)}
@@ -50,7 +50,7 @@ export function CategoryNameEditor(props: CategoryNameEditorProps) {
         </div>
       </div>
       <input
-        className={styles['text-input']}
+        className="text-input"
         type="text"
         placeholder="請輸入分類名稱（前方可變更 emoji）"
         value={props.categoryName.text}

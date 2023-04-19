@@ -22,3 +22,17 @@ body {
     font-family: Noto Sans TC;
 }
 
+.input-container {
+    background: #F7F7F7;
+    border-radius: 8px;
+    gap: 1rem;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    .text-input {
+        all: unset;
+        flex: auto;
+    }
+}
+

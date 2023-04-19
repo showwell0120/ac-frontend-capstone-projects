@@ -22,6 +22,10 @@ $theme-colors: (
 }
 
 .modal-container {
+    .modal-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+    }
     &.no-title {
         .modal-header {
             border-bottom: none;

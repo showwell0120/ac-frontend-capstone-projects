@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
+import svgrPlugin from 'vite-plugin-svgr';
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/basic',
@@ -18,6 +19,11 @@ export default defineConfig({
 
   plugins: [
     react(),
+    svgrPlugin({
+      svgrOptions: {
+        icon: true,
+      },
+    }),
     viteTsConfigPaths({
       root: '../../',
     }),
