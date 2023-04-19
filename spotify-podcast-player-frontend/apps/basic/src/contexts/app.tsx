@@ -3,6 +3,7 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 export const ModalMap = {
   CategoryNameEditor: Symbol('CategoryNameEditor'),
   CategoryRemovePrompt: Symbol('CategoryRemovePrompt'),
+  AddShow: Symbol('AddShow'),
 };
 
 interface AppProps {
