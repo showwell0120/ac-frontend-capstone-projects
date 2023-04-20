@@ -1,7 +1,28 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.container {
+    width: 180px;
+    background: #FFFFFF;
+    box-shadow: 24px 8px 24px rgba(199, 199, 199, 0.24);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    .cover {    
+        img {
+            border-radius: 10.6834px;
+            width: 100%;
+        }
+    }
+    .name {
+        font-size: .875rem;
+        color: #141416;
+    }
+    .publisher {
+        font-size:.75rem;
+        color: #93989A;
+    }
+    .more-btn {
+        width: fit-content;
+        color: #FFFFFF;
+    }
+}
