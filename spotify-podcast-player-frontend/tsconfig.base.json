@@ -14,14 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {
-      "@spotify-podcast-player-frontend/backend-api": [
-        "libs/backend-api/src/index.ts"
-      ],
-      "@spotify-podcast-player-frontend/spotify-api": [
-        "libs/spotify-api/src/index.ts"
-      ]
-    }
+    "paths": {}
   },
   "exclude": ["node_modules", "tmp"]
 }

@@ -20,7 +20,7 @@ export async function redirectToAuthCodeFlow() {
   document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
 }
 
-export async function getTokenInfo(code: string): Promise<TokenInfo> {
+export async function getTokenInfo(code: string): Promise<SpotifyTokenInfo> {
   const verifier = localStorage.getItem('verifier');
 
   const params = new URLSearchParams();
