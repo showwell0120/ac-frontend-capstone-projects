@@ -6,6 +6,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "types": ["vite/client", "vitest"],
+    // 自訂的專案全域 definition references
     "typeRoots": ["./src/types"]
   },
   "files": [],
