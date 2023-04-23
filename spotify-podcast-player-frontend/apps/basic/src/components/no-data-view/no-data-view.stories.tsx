@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import NoDataView from '.';
+import NoDataView from './no-data-view';
 
 const Story: Meta<typeof NoDataView> = {
   component: NoDataView,

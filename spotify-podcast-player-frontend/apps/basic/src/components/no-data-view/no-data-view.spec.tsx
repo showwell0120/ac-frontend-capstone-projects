@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import CreateShowButton from '.';
+import CreateShowButton from './no-data-view';
 
 describe('CreateShowButton', () => {
   it('should render successfully', () => {
