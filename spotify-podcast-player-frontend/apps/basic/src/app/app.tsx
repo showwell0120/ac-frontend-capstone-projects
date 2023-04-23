@@ -1,5 +1,8 @@
-import { ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryCache,
+} from '@tanstack/react-query';
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 
 import { Login, Callback, Main } from '../pages';
@@ -8,7 +11,11 @@ import { useUserContext, UserProvider } from '../contexts';
 import styles from './app.module.scss';
 
 // Create a client
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error, query) => {},
+  }),
+});
 
 function ProtectedRoute({ redirectPath = '/' }) {
   const { user, spotifyTokenInfo } = useUserContext();
