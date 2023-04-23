@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import LoggedInLayout from './logged-in-layout';
+import LoggedInLayout from '.';
 
 describe('LoggedInLayout', () => {
   it('should render successfully', () => {
