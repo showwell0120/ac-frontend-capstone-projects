@@ -1,9 +1,9 @@
 interface SpotifyTokenInfo {
-  access_token: string;
-  expires_in: number;
-  refresh_token: string;
-  scope: string;
-  token_type: string;
+  access_token: string | null;
+  expires_in: number | null;
+  refresh_token: string | null;
+  scope: string | null;
+  token_type: string | null;
 }
 
 type Images = {

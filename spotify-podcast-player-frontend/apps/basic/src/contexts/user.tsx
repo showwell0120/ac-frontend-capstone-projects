@@ -18,8 +18,8 @@ export interface UserProps {
 
 export const UserContext = createContext<UserProps>({
   user: null,
-  spotifyTokenInfo: null,
   spotifyUser: null,
+  spotifyTokenInfo: null,
   setUser: () => null,
   setSpotifyUser: () => null,
   setSpotifyTokenInfo: () => null,
