@@ -1,7 +1,8 @@
 interface User {
-  id: string;
-  favoriteEpisodeIds: string[];
-  apiToken?: string;
+  id: string | null;
+  token: string | null;
+
+  favoriteEpisodeIds?: string[] | null;
 }
 
 interface CreateUserBody {

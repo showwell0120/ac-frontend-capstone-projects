@@ -1,11 +1,10 @@
 import classNames from 'classnames';
 import Row from 'react-bootstrap/Row';
-import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 
-import { redirectToAuthCodeFlow } from '@spotify-podcast-player-frontend/spotify-api';
+import { redirectToAuthCodeFlow } from '../../apis/spotify-api';
 
 import { flexColCenter } from '../../bootstrap-classnames';
 import styles from './login.module.scss';
