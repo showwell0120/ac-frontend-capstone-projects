@@ -8,9 +8,10 @@ import './styles.scss';
 // Bootstrap Bundle JS
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
-if (import.meta.env.DEV) {
-  // const { worker } = await import('./mocks/browser');
-  // worker.start();
+if (import.meta.env.DEV && import.meta.env.MODE === 'dev-mock-api') {
+  // @ts-ignore
+  const { worker } = await import('./mocks/browser');
+  worker.start();
 }
 
 const root = ReactDOM.createRoot(
