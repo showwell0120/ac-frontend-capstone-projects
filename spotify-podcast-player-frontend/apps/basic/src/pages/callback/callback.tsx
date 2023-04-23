@@ -28,7 +28,7 @@ import styles from './callback.module.scss';
 export function Callback() {
   const { setSpotifyTokenInfo, setUser, setSpotifyUser } = useUserContext();
   const { setFavoriteEpisodeIds } = useFavoriteContext();
-  const { setCategories } = useCategoryContext();
+  const { setCategories, setCurrentCategoryId } = useCategoryContext();
 
   const navigate = useNavigate();
 
@@ -74,7 +74,10 @@ export function Callback() {
             // 取得分類
             _fetchCategories.mutate(undefined, {
               onSuccess(data) {
-                data?.categories?.length && setCategories(data?.categories);
+                if (data?.categories?.length) {
+                  setCategories(data.categories);
+                  setCurrentCategoryId(data.categories[0].id);
+                }
               },
             });
           },

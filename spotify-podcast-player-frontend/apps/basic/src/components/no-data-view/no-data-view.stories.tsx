@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import CreateShowButton from './create-show-button';
+import CreateShowButton from '.';
 
 const Story: Meta<typeof CreateShowButton> = {
   component: CreateShowButton,

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import CreateShowButton from './create-show-button';
+import CreateShowButton from '.';
 
 describe('CreateShowButton', () => {
   it('should render successfully', () => {
