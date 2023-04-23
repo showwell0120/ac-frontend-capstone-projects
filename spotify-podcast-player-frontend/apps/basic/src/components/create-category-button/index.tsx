@@ -1,5 +1,5 @@
 import { useAppContext, ModalMap } from '../../contexts/app';
-import { CategoryNameEditorModal } from '../../components/category-name-editor/category-name-editor';
+import { CategoryNameEditorModal } from '../category-name-editor/category-name-editor';
 import { ReactComponent as PlusIcon } from '../../assets/plus.svg';
 
 import styles from './create-category-button.module.scss';

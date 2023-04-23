@@ -1,7 +1,7 @@
 import type { Meta } from '@storybook/react';
 
 import { AppProvider } from '../../contexts/app';
-import CreateCategoryButton from './create-category-button';
+import CreateCategoryButton from '.';
 
 const App = () => {
   return (

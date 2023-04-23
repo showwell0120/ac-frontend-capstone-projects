@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import CreateCategoryButton from './create-category-button';
+import CreateCategoryButton from '.';
 
 describe('CreateCategoryButton', () => {
   it('should render successfully', () => {
