@@ -1,12 +1,21 @@
 import type { Meta } from '@storybook/react';
-import CreateShowButton from '.';
+import NoDataView from '.';
 
-const Story: Meta<typeof CreateShowButton> = {
-  component: CreateShowButton,
-  title: 'CreateShowButton',
+const Story: Meta<typeof NoDataView> = {
+  component: NoDataView,
+  title: 'NoDataView',
 };
 export default Story;
 
-export const Default = {
-  args: {},
+export const Show = {
+  args: {
+    type: 'show',
+    onClick: () => {},
+  },
+};
+
+export const Category = {
+  args: {
+    type: 'category',
+  },
 };
