@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import classNames from 'classnames';
 
 import CreateCategoryButton from '../../components/create-category-button';
-import UserDropdown from '../../components/user-dropdown';
+import UserDropdown from '../../components/user-menu/user-menu';
 import { getGreeting } from '../../util';
 
 import styles from './logged-in-layout.module.scss';
