@@ -9,23 +9,23 @@ import {
   useContext,
 } from 'react';
 
-export interface CategoryProps {
+export interface CategoryContextProps {
   categories: Category[];
   currentCategoryId: string | null;
   setCategories: Dispatch<SetStateAction<Category[]>>;
   setCurrentCategoryId: Dispatch<SetStateAction<string | null>>;
 }
 
-export const CategoryContext = createContext<CategoryProps>({
+export const CategoryContext = createContext<CategoryContextProps>({
   categories: [],
   currentCategoryId: null,
-  setCategories: () => {},
+  setCategories: () => null,
   setCurrentCategoryId: () => null,
 });
 
 export const useCategoryContext = () => useContext(CategoryContext);
 
-export const useCategoryProviderState = (): CategoryProps => {
+export const useCategoryProviderState = (): CategoryContextProps => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [currentCategoryId, setCurrentCategoryId] = useState<string | null>(
     null

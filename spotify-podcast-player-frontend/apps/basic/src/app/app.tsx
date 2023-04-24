@@ -6,7 +6,7 @@ import {
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 
 import { Login, Callback, Main } from '../pages';
-import { useUserContext, UserProvider, FavoriteProvider } from '../contexts';
+import { useUserContext, UserProvider, FavoriteProvider, ModalProvider } from '../contexts';
 
 import styles from './app.module.scss';
 
@@ -33,13 +33,16 @@ export function App() {
     <UserProvider>
       <FavoriteProvider>
         <QueryClientProvider client={queryClient}>
-          <Routes>
-            <Route path="/callback" element={<Callback />} />
-            <Route path="/" element={<Login />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/main" element={<Main />} />
-            </Route>
-          </Routes>
+          <ModalProvider>
+            <Routes>
+              <Route path="/callback" element={<Callback />} />
+              <Route path="/" element={<Login />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/main" element={<Main />} />
+              </Route>
+            </Routes>
+          </ModalProvider>
+
           {/* END: routes */}
         </QueryClientProvider>
       </FavoriteProvider>

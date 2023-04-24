@@ -9,19 +9,19 @@ import {
   useContext,
 } from 'react';
 
-export interface FavoriteProps {
+export interface FavoriteContextProps {
   favoriteEpisodeIds: string[];
   setFavoriteEpisodeIds: Dispatch<SetStateAction<string[]>>;
 }
 
-export const FavoriteContext = createContext<FavoriteProps>({
+export const FavoriteContext = createContext<FavoriteContextProps>({
   favoriteEpisodeIds: [],
-  setFavoriteEpisodeIds: () => {},
+  setFavoriteEpisodeIds: () => null,
 });
 
 export const useFavoriteContext = () => useContext(FavoriteContext);
 
-export const useFavoriteProviderState = (): FavoriteProps => {
+export const useFavoriteProviderState = (): FavoriteContextProps => {
   const [favoriteEpisodeIds, setFavoriteEpisodeIds] = useState<string[]>([]);
   return {
     favoriteEpisodeIds,

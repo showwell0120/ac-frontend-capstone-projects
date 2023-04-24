@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import EmojiPicker, { EmojiClickData, Emoji } from 'emoji-picker-react';
 
 import Modal from '../modal/modal';
-import { useAppContext, ModalMap } from '../../contexts/app';
 import { CategoryName, mergeCategoryName, splitCategoryName } from '../../util';
 
 import styles from './category-name-editor.module.scss';
+import { useModalContext } from '../../contexts';
 
 /* eslint-disable-next-line */
 export interface CategoryNameEditorProps {
@@ -67,7 +67,8 @@ export interface CategoryNameEditorModalProps {
 }
 
 export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
-  const { modal, closeModal } = useAppContext();
+  const { hideModal } = useModalContext();
+  
   const [categoryName, setCategoryName] = useState<CategoryName>(
     splitCategoryName(props.categoryName)
   );
@@ -76,7 +77,7 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
     setCategoryName((prevState) => ({ ...prevState, [field]: value }));
 
   const handleSave = () => {
-    closeModal();
+    hideModal();
     props.onSubmit(mergeCategoryName(categoryName));
   };
 
@@ -84,7 +85,7 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
     {
       variant: 'none',
       children: '取消',
-      onClick: closeModal,
+      onClick: hideModal,
     },
     {
       variant: 'primary',
@@ -96,9 +97,9 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
   return (
     <Modal
       title={props.title}
-      show={modal === ModalMap.CategoryNameEditor}
+      show={true}
       buttonProps={buttons}
-      onClose={closeModal}
+      onClose={hideModal}
     >
       <div className={styles['modal-container']}>
         <CategoryNameEditor

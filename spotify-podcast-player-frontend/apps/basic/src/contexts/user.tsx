@@ -7,7 +7,7 @@ import {
   useContext,
 } from 'react';
 
-export interface UserProps {
+export interface UserContextProps {
   user: User | null;
   spotifyTokenInfo: SpotifyTokenInfo | null;
   spotifyUser: SpotifyUser | null;
@@ -16,7 +16,7 @@ export interface UserProps {
   setSpotifyTokenInfo: Dispatch<SetStateAction<SpotifyTokenInfo | null>>;
 }
 
-export const UserContext = createContext<UserProps>({
+export const UserContext = createContext<UserContextProps>({
   user: null,
   spotifyUser: null,
   spotifyTokenInfo: null,
@@ -27,7 +27,7 @@ export const UserContext = createContext<UserProps>({
 
 export const useUserContext = () => useContext(UserContext);
 
-export const useUserProviderState = (): UserProps => {
+export const useUserProviderState = (): UserContextProps => {
   const [user, setUser] = useState<User | null>(null);
   const [spotifyUser, setSpotifyUser] = useState<SpotifyUser | null>(null);
   const [spotifyTokenInfo, setSpotifyTokenInfo] =
