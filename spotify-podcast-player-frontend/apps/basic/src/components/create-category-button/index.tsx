@@ -1,3 +1,6 @@
+import { useMutation } from '@tanstack/react-query';
+
+import { createCategory } from '../../apis/backend-api'
 import { useModalContext, modalTypes } from '../../contexts/modal';
 import { ReactComponent as PlusIcon } from '../../assets/plus.svg';
 
@@ -13,9 +16,7 @@ export function CreateCategoryButton(props: CreateCategoryButtonProps) {
     showModal(modalTypes.CategoryNameEditor, {
       title: '新增分類',
       categoryName: '',
-      onSubmit(categoryName: string) {
-        console.log(categoryName);
-      },
+      onSubmit: (success: boolean) => console.log(success),
     });
 
   return (

@@ -15,8 +15,16 @@ export async function fetchUser(spotifyToken: string | null): Promise<User> {
   return response.data;
 }
 
-export async function fetchCategories() {
+export async function fetchCategories(): Promise<Categories> {
   const response = await axiosInstance.get('/categories');
+
+  return response.data;
+}
+
+export async function createCategory(name: string): Promise<SuccessResponse> {
+  const response = await axiosInstance.post('/categories', {
+    name,
+  });
 
   return response.data;
 }

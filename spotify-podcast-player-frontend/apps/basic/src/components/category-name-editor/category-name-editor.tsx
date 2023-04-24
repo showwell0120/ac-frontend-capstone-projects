@@ -1,7 +1,11 @@
 import { useState, ChangeEvent } from 'react';
 import classNames from 'classnames';
 import EmojiPicker, { EmojiClickData, Emoji } from 'emoji-picker-react';
+import { useMutation } from '@tanstack/react-query';
+import Spinner from 'react-bootstrap/Spinner';
 
+
+import { createCategory } from '../../apis/backend-api';
 import Modal from '../modal/modal';
 import { CategoryName, mergeCategoryName, splitCategoryName } from '../../util';
 
@@ -63,11 +67,13 @@ export function CategoryNameEditor(props: CategoryNameEditorProps) {
 export interface CategoryNameEditorModalProps {
   title: string;
   categoryName: string;
-  onSubmit: (categoryName: string) => void;
+  onSubmit: (success: boolean) => void;
 }
 
 export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
   const { hideModal } = useModalContext();
+
+  const _createCategory = useMutation({ mutationFn: createCategory });
   
   const [categoryName, setCategoryName] = useState<CategoryName>(
     splitCategoryName(props.categoryName)
@@ -76,9 +82,14 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
   const handleChange = (value: string, field: keyof CategoryName) =>
     setCategoryName((prevState) => ({ ...prevState, [field]: value }));
 
-  const handleSave = () => {
-    hideModal();
-    props.onSubmit(mergeCategoryName(categoryName));
+  const handleSave = async () => {
+    const finalName = mergeCategoryName(categoryName);
+    _createCategory.mutate(finalName, {
+      onSuccess(data) {
+        hideModal();
+        props.onSubmit(data.success);
+      }
+    });
   };
 
   const buttons = [
@@ -102,10 +113,16 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
       onClose={hideModal}
     >
       <div className={styles['modal-container']}>
-        <CategoryNameEditor
-          categoryName={categoryName}
-          onChange={handleChange}
-        />
+        {_createCategory.isLoading ? (
+          <Spinner animation="border" role="status" className={styles['spinner']}>
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : (
+          <CategoryNameEditor
+            categoryName={categoryName}
+            onChange={handleChange}
+          />
+        )}
       </div>
     </Modal>
   );

@@ -1,5 +1,10 @@
 .modal-container {
     height: 240px;
+    .spinner {
+        position: absolute;
+        top: 40%;
+        right: 50%;
+    }
 }
 
 .emoji-wrapper {
