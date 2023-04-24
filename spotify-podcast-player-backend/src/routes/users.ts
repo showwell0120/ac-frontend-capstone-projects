@@ -16,12 +16,18 @@ const createUser = async (req, res) => {
       where: {
         id: spotifyId,
       },
+      include: {
+        favorites: true,
+      },
     })
 
     // User not found, create a new record
     if (user === null) {
       user = await prisma.user.create({
         data: { id: spotifyId },
+        include: {
+          favorites: true,
+        },
       })
     }
 
@@ -31,6 +37,9 @@ const createUser = async (req, res) => {
     res.send({
       id: user.id,
       token: token,
+      favoriteEpisodeIds: user.favorites.map((f) => ({
+        id: f.episodeId,
+      })),
     })
   }
 }
@@ -47,7 +56,7 @@ const me = async (req, res) => {
 
   res.send({
     id: req.user.id,
-    savedEpisodes: user.favorites.map((f) => ({
+    favoriteEpisodeIds: user.favorites.map((f) => ({
       id: f.episodeId,
     })),
   })

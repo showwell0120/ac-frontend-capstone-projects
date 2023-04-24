@@ -27,7 +27,7 @@ test('add favorite', async () => {
     .get('/api/me')
     .set('Authorization', authHeader)
     .send()
-  expect(resp.body.savedEpisodes[0].id).toBe(data.episodeId)
+  expect(resp.body.favoriteEpisodeIds[0].id).toBe(data.episodeId)
 
   await prisma.userFavorite.deleteMany({ where: { userId: user.id } })
   await prisma.user.delete({ where: { id: user.id } })
@@ -64,7 +64,7 @@ test('delete favorite', async () => {
     .get('/api/me')
     .set('Authorization', authHeader)
     .send()
-  expect(resp.body.savedEpisodes).toHaveLength(0)
+  expect(resp.body.favoriteEpisodeIds).toHaveLength(0)
 
   await prisma.user.delete({ where: { id: user.id } })
 })

@@ -14,11 +14,16 @@ WORKDIR /app
 RUN addgroup --system spotify-podcast-player-backend && \
           adduser --system -G spotify-podcast-player-backend spotify-podcast-player-backend
 
-COPY dist/spotify-podcast-player-backend spotify-podcast-player-backend
+COPY . spotify-podcast-player-backend
 RUN chown -R spotify-podcast-player-backend:spotify-podcast-player-backend .
 
 # You can remove this install step if you build with `--bundle` option.
 # The bundled output will include external dependencies.
-RUN npm --prefix spotify-podcast-player-backend --omit=dev -f install
+# RUN npm --prefix spotify-podcast-player-backend --omit=dev -f install
 
-CMD [ "node", "spotify-podcast-player-backend" ]
+WORKDIR /app/spotify-podcast-player-backend
+RUN npm install
+RUN npm run build
+RUN npx prisma generate
+
+CMD [ "npm", "start" ]
