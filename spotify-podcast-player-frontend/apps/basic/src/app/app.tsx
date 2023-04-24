@@ -6,7 +6,13 @@ import {
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 
 import { Login, Callback, Main } from '../pages';
-import { useUserContext, UserProvider, FavoriteProvider, ModalProvider } from '../contexts';
+import {
+  useUserContext,
+  UserProvider,
+  FavoriteProvider,
+  ModalProvider,
+  CategoryProvider,
+} from '../contexts';
 
 import styles from './app.module.scss';
 
@@ -30,23 +36,24 @@ function ProtectedRoute({ redirectPath = '/' }) {
 export function App() {
   return (
     // Provide the client to your App
+    <QueryClientProvider client={queryClient}>
     <UserProvider>
-      <FavoriteProvider>
-        <QueryClientProvider client={queryClient}>
-          <ModalProvider>
-            <Routes>
-              <Route path="/callback" element={<Callback />} />
-              <Route path="/" element={<Login />} />
-              <Route element={<ProtectedRoute />}>
-                <Route path="/main" element={<Main />} />
-              </Route>
-            </Routes>
-          </ModalProvider>
-
-          {/* END: routes */}
-        </QueryClientProvider>
-      </FavoriteProvider>
+      <CategoryProvider>
+        <FavoriteProvider>
+            <ModalProvider>
+              <Routes>
+                <Route path="/callback" element={<Callback />} />
+                <Route path="/" element={<Login />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/main" element={<Main />} />
+                </Route>
+              </Routes>
+            </ModalProvider>
+            {/* END: routes */}
+        </FavoriteProvider>
+      </CategoryProvider>
     </UserProvider>
+    </QueryClientProvider>
   );
 }
 

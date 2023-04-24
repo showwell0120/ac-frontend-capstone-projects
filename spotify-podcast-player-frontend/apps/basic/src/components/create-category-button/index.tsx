@@ -1,6 +1,3 @@
-import { useMutation } from '@tanstack/react-query';
-
-import { createCategory } from '../../apis/backend-api'
 import { useModalContext, modalTypes } from '../../contexts/modal';
 import { ReactComponent as PlusIcon } from '../../assets/plus.svg';
 

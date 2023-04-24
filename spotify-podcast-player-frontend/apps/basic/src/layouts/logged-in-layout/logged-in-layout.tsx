@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 import CreateCategoryButton from '../../components/create-category-button';
 import UserDropdown from '../../components/user-dropdown/user-dropdown';
+import {CategoryItem, CategoryMenu} from '../../components/category-menu/category-menu';
 import { getGreeting } from '../../util';
 
 import styles from './logged-in-layout.module.scss';
@@ -16,7 +17,9 @@ export function Sider() {
     <div className={styles['sidenav-container']}>
       <img className="d-block w-100" src="./images/logo.png" alt="logo" />
       <div className={styles['divider']}></div>
-      <div></div>
+      <div className="mt-5">
+        <CategoryMenu />
+      </div>
       <div className="mt-3">
         <CreateCategoryButton />
       </div>

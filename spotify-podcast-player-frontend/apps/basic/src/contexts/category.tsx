@@ -1,5 +1,5 @@
 // TODO: useReducer refactoring
-
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import {
   createContext,
   useState,
@@ -9,11 +9,14 @@ import {
   useContext,
 } from 'react';
 
+import {fetchCategories} from '../apis/backend-api'
+
 export interface CategoryContextProps {
   categories: Category[];
   currentCategoryId: string | null;
   setCategories: Dispatch<SetStateAction<Category[]>>;
   setCurrentCategoryId: Dispatch<SetStateAction<string | null>>;
+  syncCategories?: UseMutationResult<Categories, unknown, void, unknown>;
 }
 
 export const CategoryContext = createContext<CategoryContextProps>({
@@ -31,11 +34,14 @@ export const useCategoryProviderState = (): CategoryContextProps => {
     null
   );
 
+  const syncCategories = useMutation({ mutationFn: fetchCategories });
+
   return {
     categories,
     currentCategoryId,
     setCategories,
     setCurrentCategoryId,
+    syncCategories,
   };
 };
 

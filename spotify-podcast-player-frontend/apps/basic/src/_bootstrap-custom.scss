@@ -39,3 +39,25 @@ $theme-colors: (
 .btn-primary {
     --bs-btn-color: #fff;
 }
+
+.dropdown-menu {
+    --bs-border-color-translucent: transparent;
+    --bs-dropdown-padding-y: 0;
+    --bs-dropdown-font-size: .875rem;
+    box-shadow: 6px 10px 30px 1px rgba(108, 95, 188, 0.12);
+    border-radius: 8px;
+    background: #FEFEFE;
+    width: 180px;
+    z-index: 1;
+    .dropdown-item {
+        --bs-dropdown-color: #111111;
+        --bs-dropdown-link-hover-bg: transparent;
+        --bs-dropdown-link-hover-color: #FF7F50;
+        --bs-dropdown-item-padding-y: 1rem;
+        --bs-dropdown-font-size: .875rem;
+        &:not(:last-of-type) {
+            border-bottom: 1px solid #EBEBEB;
+        }
+        
+    }
+}

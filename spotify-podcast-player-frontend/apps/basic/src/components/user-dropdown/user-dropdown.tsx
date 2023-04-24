@@ -44,7 +44,7 @@ export function UserDropdown(props: UserDropdownProps) {
 
   return (
     <Dropdown>
-      <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+      <Dropdown.Toggle as={CustomToggle}>
         <div>
           <img
             className={styles['avatar']}

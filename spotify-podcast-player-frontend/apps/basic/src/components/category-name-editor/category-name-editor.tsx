@@ -10,7 +10,7 @@ import Modal from '../modal/modal';
 import { CategoryName, mergeCategoryName, splitCategoryName } from '../../util';
 
 import styles from './category-name-editor.module.scss';
-import { useModalContext } from '../../contexts';
+import { useModalContext, useCategoryContext } from '../../contexts';
 
 /* eslint-disable-next-line */
 export interface CategoryNameEditorProps {
@@ -72,6 +72,7 @@ export interface CategoryNameEditorModalProps {
 
 export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
   const { hideModal } = useModalContext();
+  const { syncCategories, setCategories } = useCategoryContext();
 
   const _createCategory = useMutation({ mutationFn: createCategory });
   
@@ -86,7 +87,13 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
     const finalName = mergeCategoryName(categoryName);
     _createCategory.mutate(finalName, {
       onSuccess(data) {
-        hideModal();
+        // TODO: error handling
+        syncCategories?.mutate(undefined, { 
+          onSuccess: (data) => {
+            setCategories(data.categories)
+          }, 
+          onSettled: () => hideModal() 
+        });
         props.onSubmit(data.success);
       }
     });
@@ -113,8 +120,12 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
       onClose={hideModal}
     >
       <div className={styles['modal-container']}>
-        {_createCategory.isLoading ? (
-          <Spinner animation="border" role="status" className={styles['spinner']}>
+        {_createCategory.isLoading || syncCategories?.isLoading ? (
+          <Spinner
+            animation="border"
+            role="status"
+            className={styles['spinner']}
+          >
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         ) : (

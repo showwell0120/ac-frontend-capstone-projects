@@ -36,3 +36,14 @@ body {
     }
 }
 
+.category-item {
+    &:hover {
+        svg {
+            path {
+                fill: #fff;
+                fill-opacity: 1;
+            }
+        }
+    }
+}
+
