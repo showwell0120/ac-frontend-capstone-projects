@@ -1,5 +1,10 @@
 .modal-container {
     height: 100px;
+    .spinner {
+        position: absolute;
+        top: 40%;
+        right: 50%;
+    }
     .text {
         font-weight: 700;
     }

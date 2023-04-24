@@ -1,31 +1,52 @@
 import { Emoji } from 'emoji-picker-react';
 import Modal from '../modal/modal';
-import { useAppContext, ModalMap } from '../../contexts/app';
-import { CategoryName, mergeCategoryName, splitCategoryName } from '../../util';
+import { useCategoryContext, useModalContext } from '../../contexts';
+import { splitCategoryName } from '../../util';
+import { useMutation } from '@tanstack/react-query';
+import Spinner from 'react-bootstrap/Spinner';
+
+import { deleteCategory } from '../../apis/backend-api';
 
 import styles from './category-remove-prompt.module.scss';
 
 /* eslint-disable-next-line */
 export interface CategoryRemovePromptProps {
+  id: string;
   categoryName: string;
-  onDelete: () => void;
+  onDelete: (success: boolean) => void;
 }
 
-export function CategoryRemovePrompt(props: CategoryRemovePromptProps) {
-  const { modal, closeModal } = useAppContext();
+export function CategoryRemovePrompt({
+  id,
+  categoryName, onDelete,
+}: CategoryRemovePromptProps) {
+  const { hideModal } = useModalContext();
+  const { syncCategories, setCategories } = useCategoryContext();
 
-  const categoryName = splitCategoryName(props.categoryName);
+  const name = splitCategoryName(categoryName);
+
+  const _deleteCategory = useMutation({ mutationFn: deleteCategory });
 
   const handleDelete = () => {
-    closeModal();
-    props.onDelete();
+    _deleteCategory.mutate(id, {
+      onSuccess: (data: SuccessResponse) => {
+        // TODO: error handling
+        syncCategories?.mutate(undefined, {
+          onSuccess: (data) => {
+            setCategories(data.categories);
+          },
+          onSettled: () => hideModal(),
+        });
+        onDelete(data.success);
+      },
+    });
   };
 
   const buttons = [
     {
       variant: 'none',
       children: '取消',
-      onClick: closeModal,
+      onClick: hideModal,
     },
     {
       variant: 'primary',
@@ -37,17 +58,27 @@ export function CategoryRemovePrompt(props: CategoryRemovePromptProps) {
   return (
     <Modal
       title="刪除分類"
-      show={modal === ModalMap.CategoryRemovePrompt}
+      show={true}
       buttonProps={buttons}
-      onClose={closeModal}
+      onClose={hideModal}
     >
       <div className={styles['modal-container']}>
-        <span>
-          您確定要繼續刪除&nbsp;
-          <Emoji unified={categoryName.emoji} size={24} />
-          &nbsp;<span className={styles['text']}>{categoryName.text}</span>
-          &nbsp;分類嗎？
-        </span>
+        {_deleteCategory.isLoading || syncCategories?.isLoading ? (
+          <Spinner
+            animation="border"
+            role="status"
+            className={styles['spinner']}
+          >
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : (
+          <span>
+            您確定要繼續刪除&nbsp;
+            <Emoji unified={name.emoji} size={24} />
+            &nbsp;<span className={styles['text']}>{name.text}</span>
+            &nbsp;分類嗎？
+          </span>
+        )}
       </div>
     </Modal>
   );

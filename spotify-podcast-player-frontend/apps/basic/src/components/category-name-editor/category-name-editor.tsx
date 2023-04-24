@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import Spinner from 'react-bootstrap/Spinner';
 
 
-import { createCategory } from '../../apis/backend-api';
+import { createCategory, updateCategory } from '../../apis/backend-api';
 import Modal from '../modal/modal';
 import { CategoryName, mergeCategoryName, splitCategoryName } from '../../util';
 
@@ -67,6 +67,7 @@ export function CategoryNameEditor(props: CategoryNameEditorProps) {
 export interface CategoryNameEditorModalProps {
   title: string;
   categoryName: string;
+  id?: string;
   onSubmit: (success: boolean) => void;
 }
 
@@ -75,6 +76,7 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
   const { syncCategories, setCategories } = useCategoryContext();
 
   const _createCategory = useMutation({ mutationFn: createCategory });
+  const _updateCategory = useMutation({ mutationFn: updateCategory });
   
   const [categoryName, setCategoryName] = useState<CategoryName>(
     splitCategoryName(props.categoryName)
@@ -83,20 +85,27 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
   const handleChange = (value: string, field: keyof CategoryName) =>
     setCategoryName((prevState) => ({ ...prevState, [field]: value }));
 
+  const updateNameCallback = {
+    onSuccess: (data: SuccessResponse) => {
+      // TODO: error handling
+      syncCategories?.mutate(undefined, {
+        onSuccess: (data) => {
+          setCategories(data.categories);
+        },
+        onSettled: () => hideModal(),
+      });
+      props.onSubmit(data.success);
+    },
+  };
+
   const handleSave = async () => {
     const finalName = mergeCategoryName(categoryName);
-    _createCategory.mutate(finalName, {
-      onSuccess(data) {
-        // TODO: error handling
-        syncCategories?.mutate(undefined, { 
-          onSuccess: (data) => {
-            setCategories(data.categories)
-          }, 
-          onSettled: () => hideModal() 
-        });
-        props.onSubmit(data.success);
-      }
-    });
+    props?.id
+      ? _updateCategory.mutate(
+          { name: finalName, id: props.id },
+          updateNameCallback
+        )
+      : _createCategory.mutate(finalName, updateNameCallback);
   };
 
   const buttons = [

@@ -28,3 +28,17 @@ export async function createCategory(name: string): Promise<SuccessResponse> {
 
   return response.data;
 }
+
+export async function updateCategory({name, id}: {name: string, id: string}): Promise<SuccessResponse> {
+  const response = await axiosInstance.put(`/categories/${id}`, {
+    name,
+  });
+
+  return response.data;
+}
+
+export async function deleteCategory(id: string): Promise<SuccessResponse> {
+  const response = await axiosInstance.delete(`/categories/${id}`);
+
+  return response.data;
+}
