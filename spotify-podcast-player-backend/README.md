@@ -87,7 +87,7 @@ Header
 ```
 {
     id: string,
-    savedEpisodes: string[]
+    favoriteEpisodeIds: string[]
 }
 ```
 

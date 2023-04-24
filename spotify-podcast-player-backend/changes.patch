@@ -1,0 +1,37 @@
+diff --git a/spotify-podcast-player-backend/Dockerfile b/spotify-podcast-player-backend/Dockerfile
+index 1313ecc..4f8ee27 100644
+--- a/spotify-podcast-player-backend/Dockerfile
++++ b/spotify-podcast-player-backend/Dockerfile
+@@ -14,11 +14,16 @@ WORKDIR /app
+ RUN addgroup --system spotify-podcast-player-backend && \
+           adduser --system -G spotify-podcast-player-backend spotify-podcast-player-backend
+ 
+-COPY dist/spotify-podcast-player-backend spotify-podcast-player-backend
++COPY . spotify-podcast-player-backend
+ RUN chown -R spotify-podcast-player-backend:spotify-podcast-player-backend .
+ 
+ # You can remove this install step if you build with `--bundle` option.
+ # The bundled output will include external dependencies.
+-RUN npm --prefix spotify-podcast-player-backend --omit=dev -f install
++# RUN npm --prefix spotify-podcast-player-backend --omit=dev -f install
+ 
+-CMD [ "node", "spotify-podcast-player-backend" ]
++WORKDIR /app/spotify-podcast-player-backend
++RUN npm install
++RUN npm run build
++RUN npx prisma generate
++
++CMD [ "npm", "start" ]
+diff --git a/spotify-podcast-player-backend/app.json b/spotify-podcast-player-backend/app.json
+new file mode 100644
+index 0000000..1c8f6d3
+--- /dev/null
++++ b/spotify-podcast-player-backend/app.json
+@@ -0,0 +1,7 @@
++{
++  "scripts": {
++    "dokku": {
++      "postdeploy": "npx prisma migrate deploy"
++    }
++  }
++}

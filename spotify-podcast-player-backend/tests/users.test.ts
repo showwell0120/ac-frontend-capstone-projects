@@ -19,6 +19,7 @@ test('create user', async () => {
     .send({ spotifyToken: spotifyId })
   expect(resp.status).toBe(200)
   expect(resp.body.token).toBeDefined()
+  expect(resp.body.favoriteEpisodeIds).toHaveLength(0)
 
   await prisma.user.delete({ where: { id: spotifyId } })
 })
@@ -35,7 +36,7 @@ test('me', async () => {
     .send()
   expect(resp.status).toBe(200)
   expect(resp.body.id).toBe(user.id)
-  expect(resp.body.savedEpisodes).toHaveLength(0)
+  expect(resp.body.favoriteEpisodeIds).toHaveLength(0)
 
   await prisma.user.delete({ where: { id: user.id } })
 })
