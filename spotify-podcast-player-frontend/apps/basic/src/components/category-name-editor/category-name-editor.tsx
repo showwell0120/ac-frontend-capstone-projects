@@ -73,7 +73,7 @@ export interface CategoryNameEditorModalProps {
 
 export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
   const { hideModal } = useModalContext();
-  const { syncCategories, setCategories } = useCategoryContext();
+  const { syncCategories, syncCategoriesMutation } = useCategoryContext();
 
   const _createCategory = useMutation({ mutationFn: createCategory });
   const _updateCategory = useMutation({ mutationFn: updateCategory });
@@ -87,13 +87,7 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
 
   const updateNameCallback = {
     onSuccess: (data: SuccessResponse) => {
-      // TODO: error handling
-      syncCategories?.mutate(undefined, {
-        onSuccess: (data) => {
-          setCategories(data.categories);
-        },
-        onSettled: () => hideModal(),
-      });
+      syncCategories({ onSettled: hideModal });
       props.onSubmit(data.success);
     },
   };
@@ -129,7 +123,7 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
       onClose={hideModal}
     >
       <div className={styles['modal-container']}>
-        {_createCategory.isLoading || syncCategories?.isLoading ? (
+        {_createCategory.isLoading || syncCategoriesMutation?.isLoading ? (
           <Spinner
             animation="border"
             role="status"

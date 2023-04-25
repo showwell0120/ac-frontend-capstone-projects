@@ -27,7 +27,7 @@ import styles from './callback.module.scss';
 export function Callback() {
   const { setSpotifyTokenInfo, setUser, setSpotifyUser } = useUserContext();
   const { setFavoriteEpisodeIds } = useFavoriteContext();
-  const { setCategories, setCurrentCategoryId, syncCategories } = useCategoryContext();
+  const { syncCategoriesMutation, syncCategories } = useCategoryContext();
 
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ export function Callback() {
     _fetchTokenInfo.isSuccess &&
     _fetchProfile.isSuccess &&
     _fetchUser.isSuccess &&
-    syncCategories?.isSuccess;
+    syncCategoriesMutation?.isSuccess;
 
   const initializeUserData = async (code: string) => {
     // 取得 spotify token
@@ -70,14 +70,7 @@ export function Callback() {
             injectAuthHeader(backendAPI, data.token);
 
             // 取得分類
-            syncCategories?.mutate(undefined, {
-              onSuccess(data) {
-                if (data?.categories?.length) {
-                  setCategories(data.categories);
-                  setCurrentCategoryId(data.categories[0].id);
-                }
-              },
-            });
+            syncCategories();
           },
         });
       },
@@ -111,7 +104,7 @@ export function Callback() {
       {(_fetchTokenInfo.isLoading || _fetchProfile.isLoading) && (
         <p>正在取得您在 Spotify 的個人資訊 ...</p>
       )}
-      {(_fetchUser.isLoading || syncCategories?.isLoading) && (
+      {(_fetchUser.isLoading || syncCategoriesMutation?.isLoading) && (
         <p>正在取得您的個人化 Podcast 資料 ...</p>
       )}
       {allSuccess && <p>一切都好了，將重導至播放頁面！</p>}

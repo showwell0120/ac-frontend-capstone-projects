@@ -11,12 +11,17 @@ import {
 
 import {fetchCategories} from '../apis/backend-api'
 
+interface SyncCategoriesEvents {
+  onSettled: () => void;
+}
+
 export interface CategoryContextProps {
   categories: Category[];
   currentCategoryId: string | null;
   setCategories: Dispatch<SetStateAction<Category[]>>;
   setCurrentCategoryId: Dispatch<SetStateAction<string | null>>;
-  syncCategories?: UseMutationResult<Categories, unknown, void, unknown>;
+  syncCategories: (events?: SyncCategoriesEvents) => void;
+  syncCategoriesMutation: UseMutationResult<Categories, unknown, void, unknown> | null;
 }
 
 export const CategoryContext = createContext<CategoryContextProps>({
@@ -24,6 +29,8 @@ export const CategoryContext = createContext<CategoryContextProps>({
   currentCategoryId: null,
   setCategories: () => null,
   setCurrentCategoryId: () => null,
+  syncCategories: () => null,
+  syncCategoriesMutation: null,
 });
 
 export const useCategoryContext = () => useContext(CategoryContext);
@@ -34,7 +41,20 @@ export const useCategoryProviderState = (): CategoryContextProps => {
     null
   );
 
-  const syncCategories = useMutation({ mutationFn: fetchCategories });
+  const syncCategoriesMutation = useMutation({ mutationFn: fetchCategories });
+
+  const syncCategories = (events?: SyncCategoriesEvents) => {
+    // TODO: error handling
+    syncCategoriesMutation.mutate(undefined, {
+      onSuccess: (data) => {
+        setCategories(data.categories);
+        data.categories.length && setCurrentCategoryId(data.categories[0].id);
+      },
+      onSettled: () => {
+        events?.onSettled && events.onSettled();
+      },
+    });
+  };
 
   return {
     categories,
@@ -42,6 +62,7 @@ export const useCategoryProviderState = (): CategoryContextProps => {
     setCategories,
     setCurrentCategoryId,
     syncCategories,
+    syncCategoriesMutation,
   };
 };
 

@@ -21,7 +21,7 @@ export function CategoryRemovePrompt({
   categoryName, onDelete,
 }: CategoryRemovePromptProps) {
   const { hideModal } = useModalContext();
-  const { syncCategories, setCategories } = useCategoryContext();
+  const { syncCategories, syncCategoriesMutation } = useCategoryContext();
 
   const name = splitCategoryName(categoryName);
 
@@ -30,13 +30,7 @@ export function CategoryRemovePrompt({
   const handleDelete = () => {
     _deleteCategory.mutate(id, {
       onSuccess: (data: SuccessResponse) => {
-        // TODO: error handling
-        syncCategories?.mutate(undefined, {
-          onSuccess: (data) => {
-            setCategories(data.categories);
-          },
-          onSettled: () => hideModal(),
-        });
+        syncCategories({ onSettled: hideModal });
         onDelete(data.success);
       },
     });
@@ -63,7 +57,7 @@ export function CategoryRemovePrompt({
       onClose={hideModal}
     >
       <div className={styles['modal-container']}>
-        {_deleteCategory.isLoading || syncCategories?.isLoading ? (
+        {_deleteCategory.isLoading || syncCategoriesMutation?.isLoading ? (
           <Spinner
             animation="border"
             role="status"
