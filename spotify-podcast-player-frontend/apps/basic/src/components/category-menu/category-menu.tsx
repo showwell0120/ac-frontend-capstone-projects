@@ -40,7 +40,7 @@ const CustomToggle = forwardRef<
 ));
 
 export function CategoryItem({id, name}: CategoryItemProps) {
-
+  const {currentCategoryId} = useCategoryContext();
   const { showModal } = useModalContext();
 
   const categoryName = splitCategoryName(name);
@@ -66,9 +66,14 @@ export function CategoryItem({id, name}: CategoryItemProps) {
     // TODO
   };
 
-
   return (
-    <div className={classNames('category-item', styles['item-container'])}>
+    <div
+      className={classNames(
+        'category-item',
+        styles['item-container'],
+        currentCategoryId === id && 'active'
+      )}
+    >
       <div className={styles['name']}>
         <Emoji unified={categoryName.emoji || '1f423'} size={20} />
         <div className={styles['text']}>{categoryName.text}</div>

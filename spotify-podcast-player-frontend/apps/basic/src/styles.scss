@@ -37,7 +37,10 @@ body {
 }
 
 .category-item {
-    &:hover {
+    &:hover, &.active {
+        border-color: #111111;
+        background-color:#111111;
+        color: #FEFEFE;
         svg {
             path {
                 fill: #fff;

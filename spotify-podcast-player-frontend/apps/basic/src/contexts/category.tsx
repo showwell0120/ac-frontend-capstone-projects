@@ -44,7 +44,7 @@ export const useCategoryProviderState = (): CategoryContextProps => {
   const syncCategoriesMutation = useMutation({ mutationFn: fetchCategories });
 
   const syncCategories = (events?: SyncCategoriesEvents) => {
-    // TODO: error handling
+    // TODO: error handling 
     syncCategoriesMutation.mutate(undefined, {
       onSuccess: (data) => {
         setCategories(data.categories);

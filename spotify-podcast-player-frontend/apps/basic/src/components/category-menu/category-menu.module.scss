@@ -11,11 +11,6 @@
     padding-left: 1rem;
     padding-right: 1rem;
     cursor: pointer;
-    &:hover {
-        border-color: #111111;
-        background-color:#111111;
-        color: #FEFEFE;
-    }
     .name {
         display: flex;
         gap: .625rem;
