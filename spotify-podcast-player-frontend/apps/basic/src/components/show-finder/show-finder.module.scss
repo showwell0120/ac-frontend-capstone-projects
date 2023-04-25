@@ -18,13 +18,17 @@
 }
 .shows-wrapper {
     padding: 1rem 0.5rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 2rem;
-    grid-row-gap: 2rem;
+    display: flex;
+    gap:2rem;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
 }
 .spinner {
     position: absolute;
     top: 45%;
     right: 50%;
+}
+.modal-container {
+    height: 50vh;
 }

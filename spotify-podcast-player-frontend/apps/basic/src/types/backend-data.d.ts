@@ -20,7 +20,7 @@ interface SuccessResponse {
 interface Category {
   id: string;
   name: string;
-  savedShows: string[];
+  savedShows: {id: string}[];
 }
 
 interface Categories {

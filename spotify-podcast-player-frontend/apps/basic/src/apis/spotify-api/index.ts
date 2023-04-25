@@ -34,3 +34,17 @@ export async function queryShows({
 
   return response.data;
 }
+
+export async function listShows({
+  ids = '',
+  country = 'TW',
+}: {
+  ids?: string;
+  country?: string;
+}): Promise<SpotifyShowListResult> {
+  const response = await axiosInstance.get(
+    `/shows?market=${country}&ids=${ids}`
+  );
+
+  return response.data;
+}

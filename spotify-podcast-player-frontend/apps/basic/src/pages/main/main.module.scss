@@ -1,3 +1,12 @@
 .container {
     padding: 1rem 0;
 }
+
+.shows-wrapper {
+    padding: 1rem 0.5rem;
+    display: flex;
+    gap:2rem;
+    justify-content: start;
+    align-items: start;
+    flex-wrap: wrap;
+}

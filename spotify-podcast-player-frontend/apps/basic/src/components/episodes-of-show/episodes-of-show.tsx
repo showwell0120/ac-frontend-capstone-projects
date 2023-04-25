@@ -1,5 +1,8 @@
 import styles from './episodes-of-show.module.scss';
 
+// modal
+// delete show
+
 /* eslint-disable-next-line */
 export interface EpisodesOfShowProps {}
 

@@ -45,7 +45,7 @@ export function ShowFinder({ showId, onSelectShow }: ShowFinderProps) {
         <>
           <div className={styles['search-title']}>搜尋結果</div>
           <div className={styles['shows-wrapper']}>
-            {data.shows.items.map((item, index) => (
+            {data.shows.items.map((item) => (
               <ShowCard
                 key={`${item.id}`}
                 publisher={item.publisher}
