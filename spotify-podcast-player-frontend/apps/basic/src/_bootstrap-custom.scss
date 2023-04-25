@@ -21,6 +21,12 @@ $theme-colors: (
   }
 }
 
+@media (min-width: 992px) {
+    .modal-lg, .modal-xl {
+        --bs-modal-width: 900px;
+    }
+}
+
 .modal-container {
     .modal-title {
         font-size: 1.125rem;

@@ -60,6 +60,18 @@ interface SpotifyShow extends SpotifyCommonFields {
   episodes: Omit<Episode, 'show'>[];
 }
 
+interface SpotifyShowQueryResult {
+  shows: {
+    href: string;
+    limit: number;
+    next: string;
+    offset: number;
+    previous: string;
+    total: number;
+    items: SpotifyShow[];
+  };
+}
+
 interface SpotifyEpisode extends SpotifyCommonFields {
   audio_preview_url: string;
   duration_ms: number;

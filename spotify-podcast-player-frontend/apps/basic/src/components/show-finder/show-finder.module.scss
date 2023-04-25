@@ -5,3 +5,26 @@
  * .container {
  * }
 */
+.container {
+    height: 50vh;
+    overflow: scroll;
+    padding: 1rem;
+    .spinner {
+        position: absolute;
+        top: 40%;
+        right: 50%;
+    }
+}
+.search-title {
+    margin-top: 1rem;
+    font-size: 1.125rem;
+    color: #111111;
+    font-weight: 700;
+}
+.shows-wrapper {
+    padding: 1rem 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+}

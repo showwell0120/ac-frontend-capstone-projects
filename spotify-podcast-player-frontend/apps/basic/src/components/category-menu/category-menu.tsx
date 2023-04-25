@@ -61,7 +61,7 @@ export function CategoryItem({ id, name }: Category) {
   };
 
   const handleAddShow = () => {
-    // TODO
+    showModal(modalTypes.ShowFinder);
   };
 
   const handleChangeCurrCategory = () => {
