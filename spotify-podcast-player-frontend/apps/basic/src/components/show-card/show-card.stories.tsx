@@ -1,11 +1,11 @@
 import type { Meta } from '@storybook/react';
 
-import { AppProvider } from '../../contexts/app';
+import { ModalProvider } from '../../contexts/modal';
 import ShowCard from './show-card';
 
 const App = () => {
   return (
-    <AppProvider>
+    <ModalProvider>
       <ShowCard
         name="BBC World News"
         publisher="BBC World Service"
@@ -18,7 +18,7 @@ const App = () => {
           },
         ]}
       />
-    </AppProvider>
+    </ModalProvider>
   );
 };
 

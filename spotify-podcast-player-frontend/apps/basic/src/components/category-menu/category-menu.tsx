@@ -16,8 +16,6 @@ import styles from './category-menu.module.scss';
 /* eslint-disable-next-line */
 export interface CategoryMenuProps {}
 
-export interface CategoryItemProps extends Category {}
-
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
 const CustomToggle = forwardRef<
@@ -39,8 +37,8 @@ const CustomToggle = forwardRef<
   </div>
 ));
 
-export function CategoryItem({id, name}: CategoryItemProps) {
-  const {currentCategoryId} = useCategoryContext();
+export function CategoryItem({ id, name }: Category) {
+  const { currentCategoryId, setCurrentCategoryId } = useCategoryContext();
   const { showModal } = useModalContext();
 
   const categoryName = splitCategoryName(name);
@@ -52,7 +50,7 @@ export function CategoryItem({id, name}: CategoryItemProps) {
       categoryName: name,
       onSubmit: (success: boolean) => console.log(success),
     });
-  }
+  };
 
   const handleDeleteCategory = () => {
     showModal(modalTypes.CategoryRemovePrompt, {
@@ -66,6 +64,10 @@ export function CategoryItem({id, name}: CategoryItemProps) {
     // TODO
   };
 
+  const handleChangeCurrCategory = () => {
+    currentCategoryId !== id && setCurrentCategoryId(id);
+  };
+
   return (
     <div
       className={classNames(
@@ -73,6 +75,7 @@ export function CategoryItem({id, name}: CategoryItemProps) {
         styles['item-container'],
         currentCategoryId === id && 'active'
       )}
+      onClick={handleChangeCurrCategory}
     >
       <div className={styles['name']}>
         <Emoji unified={categoryName.emoji || '1f423'} size={20} />

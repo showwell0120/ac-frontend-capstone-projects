@@ -1,43 +1,49 @@
 import type { Meta } from '@storybook/react';
-import { AppProvider, useAppContext, ModalMap } from '../../contexts/app';
-import { CategoryNameEditorModal } from './category-name-editor';
+import { ModalProvider, useModalContext, modalTypes } from '../../contexts/modal';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
+
 
 const Wrapper = (props: { categoryName: string; title: string }) => {
-  const { openModal } = useAppContext();
+  const { showModal } = useModalContext();
 
   return (
     <div>
-      <button onClick={() => openModal(ModalMap.CategoryNameEditor)}>
+      <button onClick={() => showModal(modalTypes.CategoryNameEditor)}>
         Show CategoryNameEditorModal
       </button>
-      <CategoryNameEditorModal
-        title={props.title}
-        categoryName={props.categoryName}
-        onSubmit={(name) => alert(name)}
-      />
     </div>
   );
 };
 
 const App = (props: { categoryName: string; title: string }) => {
   return (
-    <AppProvider>
-      <Wrapper {...props} />
-    </AppProvider>
+    <QueryClientProvider client={queryClient}>
+      <ModalProvider>
+        <Wrapper {...props} />
+      </ModalProvider>
+    </QueryClientProvider>
   );
 };
 
-const Story: Meta<typeof App> = {
+export default {
   component: App,
   title: 'Modal/CategoryNameEditor',
-};
-export default Story;
+  decorators: [
+    (Story) => (
+      <QueryClientProvider client={queryClient}>{Story()}</QueryClientProvider>
+    ),
+  ],
+} as Meta<typeof App>;
 
-export const CreateCategory = {
-  args: {
-    categoryName: '',
-    title: '新增分類',
-  },
+const Template: Story = (args) => <App {...args} />;
+
+export const CreateCategory = Template.bind({});
+
+CreateCategory.args = {
+  categoryName: '',
+  title: '新增分類',
 };
 
 export const EditCategoryName = {

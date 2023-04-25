@@ -1,18 +1,37 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { ReactComponent as SearchIcon } from '../../assets/search.svg';
 
 import styles from './search-input.module.scss';
 
 /* eslint-disable-next-line */
 export interface SearchInputProps {
-  text: string;
-  onChange: (text: string) => void;
+  value: string;
+  onChange: (value: string) => void;
+  debounceDelay?: number;
 }
 
-export function SearchInput(props: SearchInputProps) {
-  const handleTextChange = (event: ChangeEvent<HTMLInputElement>) => {
-    props.onChange(event.target.value);
+export function SearchInput({
+  value,
+  onChange,
+  debounceDelay = 500,
+}: SearchInputProps) {
+  const [searchValue, setSearchValue] = useState(value);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
   };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (searchValue !== value) {
+        onChange(searchValue);
+      }
+    }, debounceDelay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchValue, value, onChange, debounceDelay]);
 
   return (
     <div className="input-container">
@@ -21,8 +40,8 @@ export function SearchInput(props: SearchInputProps) {
         className="text-input"
         type="text"
         placeholder="開始搜尋 ..."
-        value={props.text}
-        onChange={handleTextChange}
+        value={searchValue}
+        onChange={handleChange}
       />
     </div>
   );

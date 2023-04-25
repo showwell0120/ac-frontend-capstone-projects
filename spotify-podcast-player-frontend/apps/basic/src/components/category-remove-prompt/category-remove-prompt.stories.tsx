@@ -1,34 +1,43 @@
 import type { Meta } from '@storybook/react';
-import { AppProvider, useAppContext, ModalMap } from '../../contexts/app';
-import { CategoryRemovePrompt } from './category-remove-prompt';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
+import {
+  ModalProvider,
+  useModalContext,
+  modalTypes,
+} from '../../contexts/modal';
+
+const queryClient = new QueryClient();
+
 
 const Wrapper = (props: { categoryName: string }) => {
-  const { openModal } = useAppContext();
+  const { showModal } = useModalContext();
 
   return (
     <div>
-      <button onClick={() => openModal(ModalMap.CategoryRemovePrompt)}>
+      <button onClick={() => showModal(modalTypes.CategoryRemovePrompt)}>
         Show CategoryRemovePrompt
       </button>
-      <CategoryRemovePrompt
-        categoryName={props.categoryName}
-        onDelete={() => alert('Delete')}
-      />
     </div>
   );
 };
 
 const App = (props: { categoryName: string }) => {
   return (
-    <AppProvider>
+    <ModalProvider>
       <Wrapper {...props} />
-    </AppProvider>
+    </ModalProvider>
   );
 };
 
 const Story: Meta<typeof App> = {
   component: App,
   title: 'Modal/CategoryRemovePrompt',
+  decorators: [
+    (Story) => (
+      <QueryClientProvider client={queryClient}>{Story()}</QueryClientProvider>
+    ),
+  ],
 };
 export default Story;
 
