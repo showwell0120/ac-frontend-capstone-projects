@@ -61,7 +61,7 @@ export function CategoryItem({ id, name }: Category) {
   };
 
   const handleAddShow = () => {
-    showModal(modalTypes.ShowFinder);
+    showModal(modalTypes.ShowFinder, { categoryId: id, onSubmit: (success: boolean) => console.log(success)});
   };
 
   const handleChangeCurrCategory = () => {

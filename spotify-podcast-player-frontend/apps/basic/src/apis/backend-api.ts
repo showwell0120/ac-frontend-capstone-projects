@@ -42,3 +42,17 @@ export async function deleteCategory(id: string): Promise<SuccessResponse> {
 
   return response.data;
 }
+
+export async function addShow({
+  categoryId,
+  showId,
+}: {
+  categoryId: string;
+  showId: string;
+}): Promise<SuccessResponse> {
+  const response = await axiosInstance.post(`/categories/${categoryId}/shows`, {
+    showId,
+  });
+
+  return response.data;
+}

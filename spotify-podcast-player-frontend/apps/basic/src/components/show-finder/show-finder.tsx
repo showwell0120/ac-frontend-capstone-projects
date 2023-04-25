@@ -5,29 +5,34 @@ import { useMutation } from '@tanstack/react-query';
 import SearchInput from '../search-input/search-input'
 import ShowCard from '../show-card/show-card';  
 import Modal from '../modal/modal';
-import { useModalContext, useUserContext } from '../../contexts';
+import { useModalContext, useUserContext, useCategoryContext } from '../../contexts';
 import {queryShows } from '../../apis/spotify-api';
-
+import { addShow } from '../../apis/backend-api';
 import styles from './show-finder.module.scss';
 
 /* eslint-disable-next-line */
-export interface ShowFinderProps {}
+export interface ShowFinderProps {
+  onSelectShow: (id: string) => void;
+  showId: string;
+}
 
-export function ShowFinder(props: ShowFinderProps) {
-  const {spotifyUser} = useUserContext();
+export function ShowFinder({ showId, onSelectShow }: ShowFinderProps) {
+  const { spotifyUser } = useUserContext();
 
   const [keyword, setKeyword] = useState('');
-  
-  const {mutate, isLoading, isSuccess,data } = useMutation({ mutationFn: queryShows });
+
+  const { mutate, isLoading, isSuccess, data } = useMutation({
+    mutationFn: queryShows,
+  });
 
   useEffect(() => {
-    keyword.length && mutate({
-      keyword,
-      ...(spotifyUser?.country && { country: spotifyUser?.country }),
-    });
+    keyword.length &&
+      mutate({
+        keyword,
+        ...(spotifyUser?.country && { country: spotifyUser?.country }),
+      });
   }, [keyword, spotifyUser]);
 
-  
   return (
     <div className={styles['container']}>
       <SearchInput value={keyword} onChange={setKeyword} />
@@ -48,6 +53,8 @@ export function ShowFinder(props: ShowFinderProps) {
                 id={item.id}
                 images={item.images}
                 showMore={false}
+                selected={showId === item.id}
+                onClick={onSelectShow}
               />
             ))}
           </div>
@@ -58,11 +65,29 @@ export function ShowFinder(props: ShowFinderProps) {
 }
 
 export interface ShowFinderModalProps {
-  
+  categoryId: string;
+  onSubmit: (success: boolean) => void;
 }
 
-export function ShowFinderModal(props: ShowFinderModalProps) {
+export function ShowFinderModal({ categoryId, onSubmit }: ShowFinderModalProps) {
   const { hideModal } = useModalContext();
+  const { syncCategories } = useCategoryContext();
+
+  const [showId, setShowId] = useState('');
+
+  const _addShow = useMutation({ mutationFn: addShow });
+
+  const handleSumbit = () => {
+    _addShow.mutate(
+      { categoryId, showId },
+      {
+        onSuccess: (data: SuccessResponse) => {
+          syncCategories({ onSettled: hideModal });
+          onSubmit(data.success);
+        },
+      }
+    );
+  };
 
   const buttons = [
     {
@@ -73,8 +98,8 @@ export function ShowFinderModal(props: ShowFinderModalProps) {
     {
       variant: 'primary',
       children: '確定新增',
-      disabled: true,
-      onClick: hideModal,
+      disabled: showId === '',
+      onClick: handleSumbit,
     },
   ];
 
@@ -86,7 +111,7 @@ export function ShowFinderModal(props: ShowFinderModalProps) {
       onClose={hideModal}
     >
       <div className={styles['modal-container']}>
-        {!props ? (
+        {_addShow.isLoading ? (
           <Spinner
             animation="border"
             role="status"
@@ -95,7 +120,7 @@ export function ShowFinderModal(props: ShowFinderModalProps) {
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         ) : (
-          <ShowFinder />
+          <ShowFinder onSelectShow={setShowId} showId={showId} />
         )}
       </div>
     </Modal>

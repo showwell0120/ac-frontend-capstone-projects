@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Button } from 'react-bootstrap';
 import styles from './show-card.module.scss';
 
@@ -8,6 +9,8 @@ export interface ShowCardProps {
   id: string;
   images: Images;
   showMore?: boolean;
+  selected?: boolean;
+  onClick?: (id: string) => void;
 }
 
 export function ShowCard({
@@ -16,11 +19,23 @@ export function ShowCard({
   id,
   images,
   showMore = true,
+  selected = false,
+  onClick,
 }: ShowCardProps) {
   const handleOpenModal = () => {};
 
+  const handleClick = () => {
+    onClick?.(id);
+  }
+
   return (
-    <div className={styles['container']}>
+    <div
+      className={classNames(
+        styles['container'],
+        selected && styles['selected']
+      )}
+      onClick={handleClick}
+    >
       <div className={styles['cover']}>
         <img src={images[0].url} alt={name} />
       </div>

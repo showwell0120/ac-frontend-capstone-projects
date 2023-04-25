@@ -9,11 +9,6 @@
     height: 50vh;
     overflow: scroll;
     padding: 1rem;
-    .spinner {
-        position: absolute;
-        top: 40%;
-        right: 50%;
-    }
 }
 .search-title {
     margin-top: 1rem;
@@ -27,4 +22,9 @@
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
+}
+.spinner {
+    position: absolute;
+    top: 45%;
+    right: 50%;
 }

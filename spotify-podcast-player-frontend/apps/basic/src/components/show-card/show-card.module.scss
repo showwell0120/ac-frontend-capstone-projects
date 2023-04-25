@@ -1,5 +1,5 @@
 .container {
-    width: 180px;
+    width: 176px;
     background: #FFFFFF;
     box-shadow: 24px 8px 24px rgba(199, 199, 199, 0.24);
     border-radius: 8px;
@@ -7,6 +7,11 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    &:hover, &.selected {
+        border-color: #FF7F50;
+    }
     .cover {    
         img {
             border-radius: 10.6834px;
