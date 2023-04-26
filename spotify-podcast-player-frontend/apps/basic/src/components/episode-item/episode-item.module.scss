@@ -1,7 +1,39 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.cover {
+    width: 96px;
+    height: 96px;  
+    img {
+        border-radius: .5rem;
+        width: 100%;
+    }
+}
+
+.container {
+    border: 1px solid #EDF2F7;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    flex: 1;
+}
+
+.name {
+    color: #111111;
+}
+
+.description {
+    font-weight: 400;
+    font-size: .875rem;
+    color: #718096;
+    max-height: 60px;
+    overflow: hidden;
+}
+
+.play-btn {
+    margin-right: .75rem;
+}

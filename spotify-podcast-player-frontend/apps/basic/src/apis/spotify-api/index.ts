@@ -48,3 +48,9 @@ export async function listShows({
 
   return response.data;
 }
+
+export async function getShowEpisodes({id}: {id: string}): Promise<SpotifyShowEpisodeResult> {
+  const response = await axiosInstance.get(`/shows/${id}/episodes`);
+
+  return response.data;
+}

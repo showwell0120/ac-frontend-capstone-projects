@@ -1,15 +1,13 @@
 
-import {Button} from 'react-bootstrap';
-import { useMutation } from '@tanstack/react-query';
+import { Button, Spinner } from 'react-bootstrap';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import Modal from '../modal/modal';
 import { useModalContext, useCategoryContext } from '../../contexts';
 import { deleteShow } from '../../apis/backend-api';
-
+import { getShowEpisodes } from '../../apis/spotify-api';
+import { EpisodeItem } from '../episode-item/episode-item';
 import styles from './episodes-of-show.module.scss';
-
-// modal
-// delete show
 
 /* eslint-disable-next-line */
 export interface EpisodesOfShowProps
@@ -66,12 +64,24 @@ function ShowInfo({
       </div>
     </div>
   );
-};
+}
 
 export function EpisodesOfShow(props: EpisodesOfShowProps) {
+  // TODO: pagination
+  const { data, isLoading } = useQuery(
+    ['getShowEpisodes', props.id],
+    () => getShowEpisodes({id: props.id})
+  );
+  
   return (
     <div className={styles['container']}>
       <ShowInfo {...props} />
+      <div className={styles['divider']}></div>
+      <div className={styles['episodes']}>
+        {isLoading && <Spinner animation="border" />}
+        {data?.items.length &&
+          data?.items.map((episode) => <EpisodeItem key={episode.id} episode={episode} />)}
+      </div>
     </div>
   );
 }

@@ -8,29 +8,31 @@ import styles from './episode-item.module.scss';
 
 interface EpisodeItemProps {
   episode: SpotifyEpisode;
-  onPlay: () => void;
-  onPause: () => void;
-  onAddToFavorites: () => void;
-  oonRemoveFromFavorites: () => void;
+  onPlay?: () => void;
+  onPause?: () => void;
+  onAddToFavorites?: () => void;
+  oonRemoveFromFavorites?: () => void;
 }
 
 export function EpisodeItem(props: EpisodeItemProps) {
   const { episode } = props;
 
   return (
-    <div>
-      <div>
+    <div className={styles['container']}>
+      <div className={styles['cover']}>
         <Image src={episode.images[0].url} alt={episode.name} />
       </div>
-      <div>
-        <h4>{episode.name}</h4>
-        <p>{episode.description}</p>
-        <p>
-          <Button variant="primary">Play</Button>
+      <div className={styles['main']}>
+        <div className={styles['name']}>{episode.name}</div>
+        <div className={styles['description']}>{episode.description}</div>
+        <div>
+          <Button className={styles['play-btn']} variant="primary">
+            Play
+          </Button>
           <small className="text-muted">
-            {episode.release_date} {transformDuration(episode.duration_ms)}
+            {episode.release_date}&bull;{transformDuration(episode.duration_ms)}
           </small>
-        </p>
+        </div>
       </div>
     </div>
   );

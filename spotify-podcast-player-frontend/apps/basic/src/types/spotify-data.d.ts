@@ -60,6 +60,14 @@ interface SpotifyShow extends SpotifyCommonFields {
   episodes: Omit<Episode, 'show'>[];
 }
 
+interface SpotifyPaginationData {
+  href: string;
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  total: number;
+}
 interface SpotifyShowQueryResult {
   shows: {
     href: string;
@@ -70,6 +78,10 @@ interface SpotifyShowQueryResult {
     total: number;
     items: SpotifyShow[];
   };
+}
+
+interface SpotifyShowEpisodeResult extends SpotifyPaginationData {
+  items: SpotifyEpisode[]
 }
 
 interface SpotifyShowListResult {
