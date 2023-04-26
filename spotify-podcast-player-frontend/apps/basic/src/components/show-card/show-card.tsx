@@ -6,16 +6,19 @@ import { useModalContext, modalTypes} from '../../contexts'
 import styles from './show-card.module.scss';
 
 /* eslint-disable-next-line */
-export interface ShowCardProps extends Pick<
+export interface ShowCardProps
+  extends Pick<
     SpotifyShow,
     'id' | 'name' | 'publisher' | 'description' | 'images'
   > {
+  categoryId: string;
   showMore?: boolean;
   selected?: boolean;
   onClick?: (id: string) => void;
 }
 
 export function ShowCard({
+  categoryId,
   publisher,
   name,
   id,
@@ -25,7 +28,8 @@ export function ShowCard({
   selected = false,
   onClick,
 }: ShowCardProps) {
-  const {showModal} = useModalContext();
+  const { showModal } = useModalContext();
+
   const handleOpenModal = () => {
     showModal(modalTypes.EpisodesOfShow, {
       publisher,
@@ -33,12 +37,13 @@ export function ShowCard({
       id,
       images,
       description,
+      categoryId,
     });
   };
 
   const handleClick = () => {
     onClick?.(id);
-  }
+  };
 
   return (
     <div

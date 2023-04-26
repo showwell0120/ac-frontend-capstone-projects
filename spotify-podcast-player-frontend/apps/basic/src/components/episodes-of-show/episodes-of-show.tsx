@@ -1,6 +1,10 @@
 
+import {Button} from 'react-bootstrap';
+import { useMutation } from '@tanstack/react-query';
+
 import Modal from '../modal/modal';
-import { useModalContext } from '../../contexts';
+import { useModalContext, useCategoryContext } from '../../contexts';
+import { deleteShow } from '../../apis/backend-api';
 
 import styles from './episodes-of-show.module.scss';
 
@@ -12,9 +16,34 @@ export interface EpisodesOfShowProps
   extends Pick<
     SpotifyShow,
     'id' | 'name' | 'publisher' | 'description' | 'images'
-  > {}
+  > {
+  categoryId: string;
+}
 
-function ShowInfo({name, publisher, description, images}: EpisodesOfShowProps) {
+function ShowInfo({
+  name,
+  publisher,
+  description,
+  images,
+  id,
+  categoryId,
+}: EpisodesOfShowProps) {
+  const { hideModal } = useModalContext();
+  const { syncCategories } = useCategoryContext();
+
+  const _deleteShow = useMutation({ mutationFn: deleteShow });
+
+  const handleDelete = () => {
+    _deleteShow.mutate(
+      { showId: id, categoryId },
+      {
+        onSuccess: (data: SuccessResponse) => {
+          syncCategories({ onSettled: hideModal });
+        },
+      }
+    );
+  };
+
   return (
     <div className={styles['show-info']}>
       <div className={styles['cover']}>
@@ -24,6 +53,16 @@ function ShowInfo({name, publisher, description, images}: EpisodesOfShowProps) {
         <div className={styles['name']}>{name}</div>
         <div className={styles['publisher']}>{publisher}</div>
         <div className={styles['description']}>{description}</div>
+        <div className={styles['delete-btn']}>
+          <Button
+            size="sm"
+            variant="outline-primary"
+            onClick={handleDelete}
+            disabled={_deleteShow.isLoading}
+          >
+            {_deleteShow.isLoading ? <span>刪除中</span> : <span>刪除</span>}
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -42,20 +81,8 @@ export interface EpisodesOfShowModalProps extends EpisodesOfShowProps {}
 export function EpisodesOfShowModal(props: EpisodesOfShowModalProps) {
   const { hideModal } = useModalContext();
 
-  const handleDeleteShow = () => {
-    hideModal();
-  }
-
-  const buttons = [
-    {
-      variant: 'primary',
-      children: '刪除節目',
-      onClick: handleDeleteShow,
-    },
-  ];
-
   return (
-    <Modal show={true} onClose={hideModal} buttonProps={buttons}>
+    <Modal show={true} onClose={hideModal}>
       <div className={styles['modal-container']}>
         <EpisodesOfShow {...props} />
       </div>

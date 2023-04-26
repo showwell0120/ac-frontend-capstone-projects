@@ -56,3 +56,17 @@ export async function addShow({
 
   return response.data;
 }
+
+export async function deleteShow({
+  categoryId,
+  showId,
+}: {
+  categoryId: string;
+  showId: string;
+}): Promise<SuccessResponse> {
+  const response = await axiosInstance.delete(
+    `categories/${categoryId}>/shows/${showId}`
+  );
+
+  return response.data;
+}
