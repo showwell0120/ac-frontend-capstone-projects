@@ -1,11 +1,15 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from 'react-bootstrap/Spinner';
+import classNames from 'classnames';
 
 import LoggedInLayout from '../../layouts/logged-in-layout/logged-in-layout';
 import NoDataView from '../../components/no-data-view/no-data-view';
 import ShowCard from '../../components/show-card/show-card';
+import EpisodePlayer from '../../components/episode-player/episode-player';
 import {
+  usePlayerContext,
   useCategoryContext,
   useModalContext,
   useUserContext,
@@ -22,6 +26,7 @@ export function Main(props: MainProps) {
   const { currentCategoryId, categories } = useCategoryContext();
   const {spotifyUser} = useUserContext();
   const { showModal } = useModalContext();
+  const { episode } = usePlayerContext();
 
   const currentCategory = categories.find((c) => c.id === currentCategoryId);
 
@@ -49,11 +54,25 @@ export function Main(props: MainProps) {
     <LoggedInLayout>
       <div className={styles['container']}>
         {!currentCategoryId ? (
-          <NoDataView type={'category'} />
+          <div
+            className={classNames(
+              styles['no-data'],
+              !episode && styles['has-player']
+            )}
+          >
+            <NoDataView type={'category'} />
+          </div>
         ) : !currentCategory?.savedShows?.length ? (
-          <NoDataView type={'show'} onClick={handleAddShow} />
+          <div
+            className={classNames(
+              styles['no-data'],
+              !episode && styles['has-player']
+            )}
+          >
+            <NoDataView type={'show'} onClick={handleAddShow} />
+          </div>
         ) : (
-          <div>
+          <>
             {isLoading ? (
               <Spinner
                 animation="border"
@@ -63,20 +82,32 @@ export function Main(props: MainProps) {
                 <span className="visually-hidden">Loading...</span>
               </Spinner>
             ) : (
-              <div className={styles['shows-wrapper']}>
-                {data?.shows.map((item) => (
-                  <ShowCard
-                    key={`${item.id}`}
-                    publisher={item.publisher}
-                    name={item.name}
-                    id={item.id}
-                    images={item.images}
-                    description={item.description}
-                    categoryId={currentCategoryId}
-                  />
-                ))}
+              <div className={styles['main']}>
+                <div
+                  className={classNames(
+                    styles['shows-wrapper'],
+                    !episode && styles['has-player']
+                  )}
+                >
+                  {data?.shows.map((item) => (
+                    <ShowCard
+                      key={`${item.id}`}
+                      publisher={item.publisher}
+                      name={item.name}
+                      id={item.id}
+                      images={item.images}
+                      description={item.description}
+                      categoryId={currentCategoryId}
+                    />
+                  ))}
+                </div>
               </div>
             )}
+          </>
+        )}
+        {!episode && (
+          <div className={styles['player']}>
+            <EpisodePlayer episode={episode} />
           </div>
         )}
       </div>

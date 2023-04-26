@@ -2,11 +2,31 @@
     padding: 1rem 0;
 }
 
+.no-data {
+    &.has-player {
+        width: calc(100% - 360px);
+    }
+}
+
 .shows-wrapper {
     padding: 1rem 0.5rem;
     display: flex;
-    gap:2rem;
+    gap: 2rem;
     justify-content: start;
     align-items: start;
     flex-wrap: wrap;
+    &.has-player {
+        width: calc(100% - 310px);
+    }   
+}
+
+.main {
+    position: relative;
+}
+
+.player {
+    position: fixed;
+    width: 320px;
+    right: 3.75rem;
+    top: 120px;
 }

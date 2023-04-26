@@ -1,7 +1,19 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.container {
+    box-shadow: 16px 16px 40px rgba(199, 199, 199, 0.24);
+    border-radius: 1rem;
+    width: 100%;
+    padding: 1rem 2rem;
+    background-color: #FFFFFF;
+}
+
+.header {
+    font-size: 1.5rem;
+    color: #1A202C;
+}
+
+.divider {
+    height: 1px;
+    width: 100%;
+    background-color: #E2E8F0;
+    margin: 1rem 0;
+}

@@ -12,6 +12,7 @@ import {
   FavoriteProvider,
   ModalProvider,
   CategoryProvider,
+  PlayerProvider
 } from '../contexts';
 
 import styles from './app.module.scss';
@@ -37,22 +38,24 @@ export function App() {
   return (
     // Provide the client to your App
     <QueryClientProvider client={queryClient}>
-    <UserProvider>
-      <CategoryProvider>
-        <FavoriteProvider>
+      <UserProvider>
+        <CategoryProvider>
+          <FavoriteProvider>
             <ModalProvider>
-              <Routes>
-                <Route path="/callback" element={<Callback />} />
-                <Route path="/" element={<Login />} />
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/main" element={<Main />} />
-                </Route>
-              </Routes>
+              <PlayerProvider>
+                <Routes>
+                  <Route path="/callback" element={<Callback />} />
+                  <Route path="/" element={<Login />} />
+                  <Route element={<ProtectedRoute />}>
+                    <Route path="/main" element={<Main />} />
+                  </Route>
+                </Routes>
+              </PlayerProvider>
             </ModalProvider>
             {/* END: routes */}
-        </FavoriteProvider>
-      </CategoryProvider>
-    </UserProvider>
+          </FavoriteProvider>
+        </CategoryProvider>
+      </UserProvider>
     </QueryClientProvider>
   );
 }

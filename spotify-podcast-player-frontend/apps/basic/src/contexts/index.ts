@@ -4,4 +4,6 @@ export * from './favorite';
 
 export * from './category';
 
-export * from './modal'
+export * from './modal';
+
+export * from './player';
