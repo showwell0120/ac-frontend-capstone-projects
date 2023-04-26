@@ -1,13 +1,15 @@
 import classNames from 'classnames';
 import { Button } from 'react-bootstrap';
+
+import { useModalContext, modalTypes} from '../../contexts'
+
 import styles from './show-card.module.scss';
 
 /* eslint-disable-next-line */
-export interface ShowCardProps {
-  publisher: string;
-  name: string;
-  id: string;
-  images: Images;
+export interface ShowCardProps extends Pick<
+    SpotifyShow,
+    'id' | 'name' | 'publisher' | 'description' | 'images'
+  > {
   showMore?: boolean;
   selected?: boolean;
   onClick?: (id: string) => void;
@@ -18,11 +20,21 @@ export function ShowCard({
   name,
   id,
   images,
+  description,
   showMore = true,
   selected = false,
   onClick,
 }: ShowCardProps) {
-  const handleOpenModal = () => {};
+  const {showModal} = useModalContext();
+  const handleOpenModal = () => {
+    showModal(modalTypes.EpisodesOfShow, {
+      publisher,
+      name,
+      id,
+      images,
+      description,
+    });
+  };
 
   const handleClick = () => {
     onClick?.(id);

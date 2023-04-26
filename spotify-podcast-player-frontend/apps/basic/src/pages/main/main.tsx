@@ -71,6 +71,7 @@ export function Main(props: MainProps) {
                     name={item.name}
                     id={item.id}
                     images={item.images}
+                    description={item.description}
                   />
                 ))}
               </div>

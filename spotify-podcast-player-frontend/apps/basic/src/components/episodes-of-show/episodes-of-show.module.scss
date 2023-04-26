@@ -5,3 +5,36 @@
  * .container {
  * }
 */
+.show-info {
+    display: flex;
+    gap: 1rem;
+    .cover {
+        width: 128px;
+        height: 128px;  
+        img {
+            border-radius: 10.6834px;
+            width: 100%;
+        }
+    }
+    .texts {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+    }
+    .name {
+        color: #111111;
+        font-weight: 700;
+        font-size: 1.125rem;
+    }
+    .publisher {
+        color: #93989A;
+        font-weight: 400;
+        font-size: .75rem;
+    }
+    .description {
+        font-weight: 400;
+        font-size: .75rem;
+        line-height: 1.0625rem;
+        color: #718096;
+    }
+}
