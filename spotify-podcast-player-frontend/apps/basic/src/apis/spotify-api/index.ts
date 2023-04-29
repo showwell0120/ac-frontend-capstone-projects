@@ -49,8 +49,10 @@ export async function listShows({
   return response.data;
 }
 
-export async function getShowEpisodes({id}: {id: string}): Promise<SpotifyShowEpisodeResult> {
-  const response = await axiosInstance.get(`/shows/${id}/episodes`);
+export async function getShowEpisodes({ id, offset = 0 }: {id: string, offset?: number}): Promise<SpotifyShowEpisodeResult> {
+  const response = await axiosInstance.get(`/shows/${id}/episodes`, {
+    params: { offset },
+  });
 
   return response.data;
 }

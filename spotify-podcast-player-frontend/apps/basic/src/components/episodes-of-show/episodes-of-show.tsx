@@ -1,6 +1,6 @@
 
 import { Button, Spinner } from 'react-bootstrap';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
 
 import Modal from '../modal/modal';
 import { useModalContext, useCategoryContext } from '../../contexts';
@@ -8,6 +8,7 @@ import { deleteShow } from '../../apis/backend-api';
 import { getShowEpisodes } from '../../apis/spotify-api';
 import { EpisodeItem } from '../episode-item/episode-item';
 import styles from './episodes-of-show.module.scss';
+import { useEffect, useRef, useState } from 'react';
 
 /* eslint-disable-next-line */
 export interface EpisodesOfShowProps
@@ -67,20 +68,48 @@ function ShowInfo({
 }
 
 export function EpisodesOfShow(props: EpisodesOfShowProps) {
-  // TODO: pagination
-  const { data, isLoading } = useQuery(
-    ['getShowEpisodes', props.id],
-    () => getShowEpisodes({id: props.id})
-  );
-  
+  // infinite scrolling
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery(
+      ['getShowEpisodes', props.id],
+      ({ pageParam = 0 }) =>
+        getShowEpisodes({ id: props.id, offset: pageParam }),
+      {
+        getNextPageParam: (lastPage, pages) => {
+          console.log(lastPage, pages);
+          if (!lastPage.next) {
+            return undefined;
+          }
+          return lastPage.offset + lastPage.limit;
+        },
+      }
+    );
+
+  const items = data?.pages.flatMap((page) => page.items) ?? [];
+
+  const handleScroll = (event) => {
+    const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
+    if (scrollTop + clientHeight === scrollHeight) {
+      if (!isLoading && hasNextPage) {
+        console.log('Scrolled to bottom!');
+        fetchNextPage();
+      }
+    }
+  };
+
   return (
     <div className={styles['container']}>
       <ShowInfo {...props} />
       <div className={styles['divider']}></div>
-      <div className={styles['episodes']}>
-        {isLoading && <Spinner animation="border" />}
-        {data?.items.length &&
-          data?.items.map((episode) => <EpisodeItem key={episode.id} episode={episode} />)}
+      <div
+        className={styles['episodes']}
+        onScroll={handleScroll}
+      >
+        {isFetchingNextPage && <Spinner animation="border" />}
+        {items.length &&
+          items.map((episode) => (
+            <EpisodeItem key={episode.id} episode={episode} />
+          ))}
       </div>
     </div>
   );
