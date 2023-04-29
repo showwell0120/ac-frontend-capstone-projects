@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import { useEffect, useRef } from 'react';
+
 import {usePlayerContext} from '../../contexts';
+import FavoriteButton from '../favorite-button/favorite-button';
+
 import styles from './episode-player.module.scss';
 
 /* eslint-disable-next-line */
@@ -18,6 +21,8 @@ export function EpisodePlayer(props: EpisodePlayerProps) {
     destroyPlayer
   } = usePlayerContext();
   const playerRef = useRef<HTMLDivElement>(null);
+
+  console.log(episode);
 
   useEffect(() => {
     if (!embedController) {
@@ -51,8 +56,16 @@ export function EpisodePlayer(props: EpisodePlayerProps) {
 
   return episode ? (
     <div className={styles['container']}>
-      <div className={styles['header']}>正在播放</div>
+      <div className={styles['header']}>
+        <span>正在播放</span>
+        <FavoriteButton episodeId={episode.id} />
+      </div>
       <div className={styles['divider']}></div>
+      <div className={styles['name']}>{episode.name}</div>
+      <div
+        className={styles['description']}
+        dangerouslySetInnerHTML={{ __html: episode.html_description }}
+      ></div>
       <div ref={playerRef}></div>
     </div>
   ) : null;

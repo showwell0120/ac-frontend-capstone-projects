@@ -104,5 +104,4 @@ interface SpotifyEpisode extends SpotifyCommonFields {
     resume_position_ms: number;
   };
   restrictions: Record<string, string>;
-  show: Omit<Show, 'episodes'>;
 }

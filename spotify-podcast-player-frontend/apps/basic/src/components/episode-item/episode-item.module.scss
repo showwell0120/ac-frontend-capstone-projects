@@ -33,21 +33,6 @@
     color: #111111;
 }
 
-.fav {
-    position: relative;
-    cursor: pointer;
-    // expand clickable area
-    &::before {
-        content: '';
-        position: absolute;
-        width: 2rem;
-        height: 2rem;
-        top: -2px;
-        left: -8px;
-        cursor: pointer;
-    }
-}
-
 .description {
     font-weight: 400;
     font-size: .875rem;

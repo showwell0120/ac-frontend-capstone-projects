@@ -1,13 +1,10 @@
-import { Image, Spinner } from 'react-bootstrap';
-import { useMutation } from '@tanstack/react-query';
+import Image from 'react-bootstrap/Image';
 
-import { usePlayerContext, useFavoriteContext } from '../../contexts';
+import { usePlayerContext } from '../../contexts';
 import { transformDuration } from '../../util';
 import { ReactComponent as PlayIcon } from '../../assets/play.svg';
 import { ReactComponent as PauseIcon } from '../../assets/pause.svg';
-import { ReactComponent as SavedFavIcon } from '../../assets/bookmark-fill.svg';
-import { ReactComponent as FavIcon } from '../../assets/bookmark-outline.svg';
-import { addFavorite, removeFavorite } from '../../apis/backend-api';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 import styles from './episode-item.module.scss';
 
@@ -24,43 +21,12 @@ export function EpisodeItem(props: EpisodeItemProps) {
     embedController,
     playStatus,
   } = usePlayerContext();
-  const { favoriteEpisodeIds, setFavoriteEpisodeIds } = useFavoriteContext();
-
-  const _addFavorite = useMutation({ mutationFn: addFavorite });
-  const _removeFavorite = useMutation({ mutationFn: removeFavorite });
-
-  const isSaved = favoriteEpisodeIds.findIndex(f => f.id === myEpisode.id) > -1;
-
-  const isLoading = _addFavorite.isLoading || _removeFavorite.isLoading;
-
   const handlePlay = () => {
     setEpisode({ ...myEpisode });
   }
 
   const handalePause = () => {
     embedController.togglePlay();
-  }
-
-  const handleAddFavorite = () => {
-    _addFavorite.mutate(myEpisode.id, {
-      onSuccess(data: SuccessResponse) {
-        data.success &&
-          setFavoriteEpisodeIds(
-            [...favoriteEpisodeIds, {id: myEpisode.id}]
-          );
-      },
-    });
-  }
-
-  const handleRemoveFavorite = () => {
-    _removeFavorite.mutate(myEpisode.id, {
-      onSuccess(data: SuccessResponse) {
-        data.success &&
-          setFavoriteEpisodeIds(
-            favoriteEpisodeIds.filter(f => f.id !== myEpisode.id)
-          );
-      },
-    });
   }
 
   return (
@@ -71,18 +37,7 @@ export function EpisodeItem(props: EpisodeItemProps) {
       <div className={styles['main']}>
         <div className={styles['header']}>
           <div className={styles['name']}>{myEpisode.name}</div>
-          <div
-            className={styles['fav']}
-            onClick={isSaved ? handleRemoveFavorite : handleAddFavorite}
-          >
-            {isLoading ? (
-              <Spinner animation="border" size="sm" />
-            ) : isSaved ? (
-              <SavedFavIcon />
-            ) : (
-              <FavIcon />
-            )}
-          </div>
+          <FavoriteButton episodeId={myEpisode.id} />
         </div>
         <div className={styles['description']}>{myEpisode.description}</div>
         <div>
