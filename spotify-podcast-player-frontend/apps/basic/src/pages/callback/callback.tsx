@@ -57,7 +57,7 @@ export function Callback() {
           },
         });
 
-        // 取得使用者資訊;
+        // 取得使用者資訊
         _fetchUser.mutate(data.access_token, {
           onSuccess(data) {
             const { id, token } = data;

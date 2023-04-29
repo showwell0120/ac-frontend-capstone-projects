@@ -65,8 +65,22 @@ export async function deleteShow({
   showId: string;
 }): Promise<SuccessResponse> {
   const response = await axiosInstance.delete(
-    `categories/${categoryId}>/shows/${showId}`
+    `/categories/${categoryId}>/shows/${showId}`
   );
+
+  return response.data;
+}
+
+export async function addFavorite(episodeId: string): Promise<SuccessResponse> {
+  const response = await axiosInstance.post(`/episodes`, {
+    episodeId,
+  });
+
+  return response.data;
+}
+
+export async function removeFavorite(episodeId: string): Promise<SuccessResponse> {
+  const response = await axiosInstance.delete(`/episodes/${episodeId}`);
 
   return response.data;
 }

@@ -1,6 +1,7 @@
 .cover {
     width: 96px;
-    height: 96px;  
+    height: 96px;
+    flex: none; 
     img {
         border-radius: .5rem;
         width: 100%;
@@ -22,8 +23,29 @@
     flex: 1;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
 .name {
     color: #111111;
+}
+
+.fav {
+    position: relative;
+    cursor: pointer;
+    // expand clickable area
+    &::before {
+        content: '';
+        position: absolute;
+        width: 2rem;
+        height: 2rem;
+        top: -2px;
+        left: -8px;
+        cursor: pointer;
+    }
 }
 
 .description {
@@ -38,3 +60,5 @@
     margin-right: .75rem;
     cursor: pointer;
 }
+
+

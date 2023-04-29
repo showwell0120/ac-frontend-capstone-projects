@@ -1,8 +1,12 @@
+interface Favorite {
+  id: string
+}
+
 interface User {
   id: string | null;
   token: string | null;
 
-  favoriteEpisodeIds?: string[] | null;
+  favoriteEpisodeIds?: Favorite[] | null;
 }
 
 interface CreateUserBody {

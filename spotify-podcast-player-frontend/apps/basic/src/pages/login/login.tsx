@@ -36,7 +36,7 @@ export function Login(props: LoginProps) {
       <Col className={classNames(flexColCenter, 'p-0', styles['left-col'])}>
         <div className={classNames(flexColCenter, styles['logo'])}>
           <img
-            className="d-block w-50 mb-6"
+            className="d-block w-75 mb-6"
             src="./images/logo.png"
             alt="logo"
           />

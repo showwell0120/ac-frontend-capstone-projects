@@ -28,8 +28,6 @@ export function Main(props: MainProps) {
   const { showModal } = useModalContext();
   const { episode } = usePlayerContext();
 
-  useEffect(() => console.log(episode), [episode]);
-
   const currentCategory = categories.find((c) => c.id === currentCategoryId);
 
   const { data, isLoading } = useQuery(
