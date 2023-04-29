@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 
-import { Login, Callback, Main } from '../pages';
+import { Login, Callback, Main, Favorites } from '../pages';
 import {
   useUserContext,
   UserProvider,
@@ -48,6 +48,7 @@ export function App() {
                   <Route path="/" element={<Login />} />
                   <Route element={<ProtectedRoute />}>
                     <Route path="/main" element={<Main />} />
+                    <Route path="/favorites" element={<Favorites />} />
                   </Route>
                 </Routes>
               </ModalProvider>

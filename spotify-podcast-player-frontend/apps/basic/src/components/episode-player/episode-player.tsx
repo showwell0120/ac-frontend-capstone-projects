@@ -15,8 +15,9 @@ export function EpisodePlayer(props: EpisodePlayerProps) {
     episode,
     embedController,
     setEmbedController,
+    destroyPlayer
   } = usePlayerContext();
-
+  console.log(episode, embedController);
   const playerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,13 +44,19 @@ export function EpisodePlayer(props: EpisodePlayerProps) {
     }
   }, [episode]);
 
-  return (
+  useEffect(() => {
+    return () => {
+      destroyPlayer();
+    }
+  }, []);
+
+  return episode ? (
     <div className={styles['container']}>
       <div className={styles['header']}>正在播放</div>
       <div className={styles['divider']}></div>
       <div ref={playerRef}></div>
     </div>
-  );
+  ) : null;
 }
 
 export default EpisodePlayer;

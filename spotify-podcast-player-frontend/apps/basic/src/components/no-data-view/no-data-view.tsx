@@ -8,18 +8,20 @@ import styles from './no-data-view.module.scss';
 
 /* eslint-disable-next-line */
 export interface NoDataViewProps {
-  type: 'category' | 'show';
+  type: 'category' | 'show' | 'favorite';
   onClick?: () => void;
 }
 
 const title = {
   category: '您尚未新增任何分類，可以點擊左方按鈕新增！',
   show: '您尚未加入任何節目，可以點擊下方按鈕新增！',
+  favorite: '您尚未新增任何收藏，可以前往單集資訊新增！',
 };
 
 const button = {
-  category: '新增分類',
   show: '新增節目',
+  category: '新增分類',
+  favorite: '前往主頁',
 };
 
 export function NoDataView({ type, onClick }: NoDataViewProps) {

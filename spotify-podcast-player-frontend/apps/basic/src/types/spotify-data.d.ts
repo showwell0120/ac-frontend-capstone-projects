@@ -88,6 +88,10 @@ interface SpotifyShowListResult {
   shows: SpotifyShow[];
 }
 
+interface SpotifyEpisodeListResult {
+  episodes: SpotifyEpisode[];
+}
+
 interface SpotifyEpisode extends SpotifyCommonFields {
   audio_preview_url: string;
   duration_ms: number;

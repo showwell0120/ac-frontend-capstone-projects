@@ -17,6 +17,7 @@ export interface PlayerContextProps {
   setEpisode: Dispatch<SetStateAction<SpotifyEpisode | null>>;
   embedController: any;
   setEmbedController: Dispatch<SetStateAction<any>>;
+  destroyPlayer: () => void;
 }
 
 export const PlayerContext = createContext<PlayerContextProps>({
@@ -25,6 +26,7 @@ export const PlayerContext = createContext<PlayerContextProps>({
   setEpisode: () => null,
   embedController: null,
   setEmbedController: () => null,
+  destroyPlayer: () => null,
 });
 
 export const usePlayerContext = () => useContext(PlayerContext);
@@ -34,6 +36,13 @@ export const usePlayerProviderState = (): PlayerContextProps => {
   const [playStatus, setPlayStatus] = useState<PlayStatus>('none');
 
   const [embedController, setEmbedController] = useState<any>(null);
+
+  const destroyPlayer = () => {
+    setEpisode(null);
+    setPlayStatus('none');
+    embedController?.destroy();
+    setEmbedController(null);
+  }
 
   useEffect(() => {
     if (embedController) {
@@ -54,6 +63,7 @@ export const usePlayerProviderState = (): PlayerContextProps => {
     setEpisode,
     embedController,
     setEmbedController,
+    destroyPlayer,
   };
 };
 

@@ -37,6 +37,30 @@ body {
 }
 
 .category-item {
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    border: 2px solid transparent;
+    background-color: transparent;
+    color: #718096;
+    font-size: 0.875rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    .name {
+        display: flex;
+        gap: .625rem;
+        flex: 0;
+        .text {
+            width: 120px;
+            white-space: nowrap;
+            text-overflow: ellipsis;  
+            overflow:hidden;  
+        }
+    }
     &:hover, &.active {
         border-color: #111111;
         background-color:#111111;

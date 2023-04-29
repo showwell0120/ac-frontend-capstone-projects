@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from 'react-bootstrap/Spinner';
 import classNames from 'classnames';

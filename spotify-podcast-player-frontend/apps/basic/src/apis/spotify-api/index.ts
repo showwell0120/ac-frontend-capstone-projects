@@ -54,3 +54,17 @@ export async function getShowEpisodes({id}: {id: string}): Promise<SpotifyShowEp
 
   return response.data;
 }
+
+export async function listEpisodes({
+  ids = '',
+  country = 'TW',
+}: {
+  ids?: string;
+  country?: string;
+}): Promise<SpotifyEpisodeListResult> {
+  const response = await axiosInstance.get(
+    `/episodes?market=${country}&ids=${ids}`
+  );
+
+  return response.data;
+}

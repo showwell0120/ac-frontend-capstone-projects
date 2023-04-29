@@ -1,0 +1,28 @@
+
+.container {
+    padding: 1rem 0;
+}
+
+.no-data {
+    &.has-player {
+        width: calc(100% - 360px);
+    }
+}
+
+.episodes {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    &.has-player {
+        width: calc(100% - 340px);
+    }
+}
+
+.player {
+    position: fixed;
+    width: 320px;
+    right: 3.75rem;
+    top: 120px;
+}

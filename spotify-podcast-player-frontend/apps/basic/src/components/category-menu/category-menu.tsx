@@ -2,6 +2,7 @@ import { forwardRef, ReactNode, MouseEvent } from 'react';
 import { Emoji } from 'emoji-picker-react';
 import classNames from 'classnames';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import {
   useCategoryContext,
@@ -40,6 +41,11 @@ const CustomToggle = forwardRef<
 export function CategoryItem({ id, name }: Category) {
   const { currentCategoryId, setCurrentCategoryId } = useCategoryContext();
   const { showModal } = useModalContext();
+  
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const isFavPath = pathname.includes('/favorites');
 
   const categoryName = splitCategoryName(name);
 
@@ -65,21 +71,23 @@ export function CategoryItem({ id, name }: Category) {
   };
 
   const handleChangeCurrCategory = () => {
-    currentCategoryId !== id && setCurrentCategoryId(id);
+    setCurrentCategoryId(id);
+    if(isFavPath) {
+      navigate('/main');
+    }
   };
 
   return (
     <div
       className={classNames(
         'category-item',
-        styles['item-container'],
         currentCategoryId === id && 'active'
       )}
       onClick={handleChangeCurrCategory}
     >
-      <div className={styles['name']}>
+      <div className={'name'}>
         <Emoji unified={categoryName.emoji || '1f423'} size={20} />
-        <div className={styles['text']}>{categoryName.text}</div>
+        <div className={'text'}>{categoryName.text}</div>
       </div>
       <Dropdown drop="down-centered">
         <Dropdown.Toggle as={CustomToggle} />
