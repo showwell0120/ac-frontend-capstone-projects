@@ -1,12 +1,15 @@
 
 import { Button, Spinner } from 'react-bootstrap';
 import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import Modal from '../modal/modal';
 import { useModalContext, useCategoryContext } from '../../contexts';
 import { deleteShow } from '../../apis/backend-api';
 import { getShowEpisodes } from '../../apis/spotify-api';
 import { EpisodeItem } from '../episode-item/episode-item';
+import { shouldFallback } from '../fallback-render/fallback-render';
+
 import styles from './episodes-of-show.module.scss';
 
 /* eslint-disable-next-line */
@@ -30,6 +33,13 @@ function ShowInfo({
   const { syncCategories } = useCategoryContext();
 
   const _deleteShow = useMutation({ mutationFn: deleteShow });
+
+  // error handling: fallback rendering or other actions
+  if (_deleteShow.isError) {
+    if (shouldFallback(_deleteShow.error as AxiosError)) {
+      throw _deleteShow.error;
+    }
+  }
 
   const handleDelete = () => {
     _deleteShow.mutate(

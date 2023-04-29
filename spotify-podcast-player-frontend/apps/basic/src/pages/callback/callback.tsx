@@ -35,6 +35,13 @@ export function Callback() {
   const _fetchProfile = useMutation({ mutationFn: fetchProfile });
   const _fetchUser = useMutation({ mutationFn: fetchUser });
 
+  // error handling: fallback rendering
+  if (_fetchTokenInfo.isError) {
+    throw _fetchTokenInfo.error;
+  }
+  if (_fetchProfile.isError) {
+    throw _fetchProfile.error;
+  }
   if (_fetchUser.isError) {
     throw _fetchUser.error;
   }

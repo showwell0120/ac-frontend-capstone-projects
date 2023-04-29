@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import SearchInput from '../search-input/search-input'
 import ShowCard from '../show-card/show-card';  
@@ -9,6 +10,7 @@ import { useModalContext, useUserContext, useCategoryContext } from '../../conte
 import {queryShows } from '../../apis/spotify-api';
 import { addShow } from '../../apis/backend-api';
 import styles from './show-finder.module.scss';
+import {shouldFallback} from '../fallback-render/fallback-render'
 
 /* eslint-disable-next-line */
 export interface ShowFinderProps {
@@ -22,9 +24,14 @@ export function ShowFinder({ showId, onSelectShow, categoryId }: ShowFinderProps
 
   const [keyword, setKeyword] = useState('');
 
-  const { mutate, isLoading, isSuccess, data } = useMutation({
+  const { mutate, isLoading, isSuccess, data, isError, error } = useMutation({
     mutationFn: queryShows,
   });
+
+  // error handling: fallback rendering
+  if (isError) {
+    throw error;
+  }
 
   useEffect(() => {
     keyword.length &&
@@ -79,6 +86,13 @@ export function ShowFinderModal({ categoryId, onSubmit }: ShowFinderModalProps) 
   const [showId, setShowId] = useState('');
 
   const _addShow = useMutation({ mutationFn: addShow });
+
+  // error handling: fallback rendering or other actions
+  if(_addShow.isError) {
+    if(shouldFallback(_addShow.error as AxiosError)) {
+      throw _addShow.error;
+    }
+  }
 
   const handleSumbit = () => {
     _addShow.mutate(

@@ -18,6 +18,13 @@ const messageMap = {
   serverError: "系統出現內部錯誤，請聯繫客服人員。"
 }
 
+const fallbackStatuses = [401, 403, 500];
+
+export const shouldFallback = (error: AxiosError) => {
+  const status = error.response?.status as number;
+  return fallbackStatuses.includes(status);
+}
+
 export function FallbackRender({error}: FallbackRenderProps) {
   const status = error.response?.status;
 
@@ -27,7 +34,7 @@ export function FallbackRender({error}: FallbackRenderProps) {
     ? messageMap.serverError
     : isNeedAuth
     ? messageMap.needAuth
-    : '發生未知錯誤  🤔';
+    : '發生未知錯誤，請點選下方按鈕重新登入。';
 
   return (
     <div className={classNames(flexColCenter, styles['container'])}>

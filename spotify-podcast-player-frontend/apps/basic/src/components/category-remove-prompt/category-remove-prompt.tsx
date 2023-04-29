@@ -27,6 +27,11 @@ export function CategoryRemovePrompt({
 
   const _deleteCategory = useMutation({ mutationFn: deleteCategory });
 
+  // error handling: fallback rendering
+  if (_deleteCategory.isError) {
+    throw _deleteCategory.error;
+  }
+
   const handleDelete = () => {
     _deleteCategory.mutate(id, {
       onSuccess: (data: SuccessResponse) => {

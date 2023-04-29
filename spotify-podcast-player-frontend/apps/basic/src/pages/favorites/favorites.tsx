@@ -24,7 +24,7 @@ export function Favorites(props: FavoritesProps) {
   const { episode } = usePlayerContext();
   const { favoriteEpisodeIds } = useFavoriteContext();
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, error } = useQuery(
     ['listEpisodes', spotifyUser?.country],
     () =>
       listEpisodes({
@@ -35,6 +35,11 @@ export function Favorites(props: FavoritesProps) {
       enabled: favoriteEpisodeIds?.length ? true : false,
     }
   );
+
+  // error handling: fallback rendering
+  if (isError) {
+    throw error;
+  }
 
   return (
     <div className={styles['container']}>

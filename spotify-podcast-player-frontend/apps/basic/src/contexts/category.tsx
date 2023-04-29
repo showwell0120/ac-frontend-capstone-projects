@@ -43,8 +43,12 @@ export const useCategoryProviderState = (): CategoryContextProps => {
 
   const syncCategoriesMutation = useMutation({ mutationFn: fetchCategories });
 
+  // error handling: fallback rendering
+  if (syncCategoriesMutation.isError) {
+    throw syncCategoriesMutation.error;
+  }
+
   const syncCategories = (events?: SyncCategoriesEvents) => {
-    // TODO: error handling 
     syncCategoriesMutation.mutate(undefined, {
       onSuccess: (data) => {
         setCategories(data.categories);

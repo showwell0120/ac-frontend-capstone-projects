@@ -26,7 +26,7 @@ const queryClient = new QueryClient({
   mutationCache: new MutationCache({
     onError: (error) => {
       const response = error as AxiosError;
-      console.log(response.code);
+      console.log(response);
     },
   }),
   queryCache: new QueryCache({

@@ -23,13 +23,13 @@ export interface MainProps {}
 
 export function Main(props: MainProps) {
   const { currentCategoryId, categories } = useCategoryContext();
-  const {spotifyUser} = useUserContext();
+  const { spotifyUser } = useUserContext();
   const { showModal } = useModalContext();
   const { episode } = usePlayerContext();
 
   const currentCategory = categories.find((c) => c.id === currentCategoryId);
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, error } = useQuery(
     ['listShows', spotifyUser?.country, currentCategory],
     () =>
       listShows({
@@ -37,10 +37,14 @@ export function Main(props: MainProps) {
         ids: currentCategory?.savedShows.map((show) => show.id).join('%2C'),
       }),
     {
-      enabled:
-        currentCategory?.savedShows?.length ?  true : false
+      enabled: currentCategory?.savedShows?.length ? true : false,
     }
   );
+
+  // error handling: fallback rendering
+  if (isError) {
+    throw error;
+  }
 
   const handleAddShow = () => {
     showModal(modalTypes.ShowFinder, {

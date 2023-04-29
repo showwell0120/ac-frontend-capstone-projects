@@ -3,14 +3,15 @@ import classNames from 'classnames';
 import EmojiPicker, { EmojiClickData, Emoji } from 'emoji-picker-react';
 import { useMutation } from '@tanstack/react-query';
 import Spinner from 'react-bootstrap/Spinner';
+import { AxiosError } from 'axios';
 
-
+import { useModalContext, useCategoryContext } from '../../contexts';
 import { createCategory, updateCategory } from '../../apis/backend-api';
 import Modal from '../modal/modal';
 import { CategoryName, mergeCategoryName, splitCategoryName } from '../../util';
+import { shouldFallback } from '../fallback-render/fallback-render';
 
 import styles from './category-name-editor.module.scss';
-import { useModalContext, useCategoryContext } from '../../contexts';
 
 /* eslint-disable-next-line */
 export interface CategoryNameEditorProps {
@@ -77,7 +78,21 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
 
   const _createCategory = useMutation({ mutationFn: createCategory });
   const _updateCategory = useMutation({ mutationFn: updateCategory });
-  
+
+  // error handling: fallback rendering or other actions
+  if (_createCategory.isError) {
+    if (shouldFallback(_createCategory.error as AxiosError)) {
+      throw _createCategory.error;
+    }
+  }
+
+  // error handling: fallback rendering or other actions
+  if (_updateCategory.isError) {
+    if (shouldFallback(_updateCategory.error as AxiosError)) {
+      throw _updateCategory.error;
+    }
+  }
+
   const [categoryName, setCategoryName] = useState<CategoryName>(
     splitCategoryName(props.categoryName)
   );
