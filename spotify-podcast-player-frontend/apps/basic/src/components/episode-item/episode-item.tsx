@@ -26,8 +26,6 @@ export function EpisodeItem(props: EpisodeItemProps) {
   } = usePlayerContext();
   const { favoriteEpisodeIds, setFavoriteEpisodeIds } = useFavoriteContext();
 
-  console.log(favoriteEpisodeIds);
-
   const _addFavorite = useMutation({ mutationFn: addFavorite });
   const _removeFavorite = useMutation({ mutationFn: removeFavorite });
 

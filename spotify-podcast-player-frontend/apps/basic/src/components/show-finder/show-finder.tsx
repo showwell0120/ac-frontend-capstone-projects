@@ -14,9 +14,10 @@ import styles from './show-finder.module.scss';
 export interface ShowFinderProps {
   onSelectShow: (id: string) => void;
   showId: string;
+  categoryId: string;
 }
 
-export function ShowFinder({ showId, onSelectShow }: ShowFinderProps) {
+export function ShowFinder({ showId, onSelectShow, categoryId }: ShowFinderProps) {
   const { spotifyUser } = useUserContext();
 
   const [keyword, setKeyword] = useState('');
@@ -54,6 +55,8 @@ export function ShowFinder({ showId, onSelectShow }: ShowFinderProps) {
                 images={item.images}
                 showMore={false}
                 selected={showId === item.id}
+                categoryId={categoryId}
+                description={item.description}
                 onClick={onSelectShow}
               />
             ))}
@@ -120,7 +123,7 @@ export function ShowFinderModal({ categoryId, onSubmit }: ShowFinderModalProps) 
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         ) : (
-          <ShowFinder onSelectShow={setShowId} showId={showId} />
+          <ShowFinder onSelectShow={setShowId} showId={showId} categoryId={categoryId} />
         )}
       </div>
     </Modal>

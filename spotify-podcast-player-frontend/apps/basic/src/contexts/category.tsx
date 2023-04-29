@@ -48,7 +48,9 @@ export const useCategoryProviderState = (): CategoryContextProps => {
     syncCategoriesMutation.mutate(undefined, {
       onSuccess: (data) => {
         setCategories(data.categories);
-        data.categories.length && setCurrentCategoryId(data.categories[0].id);
+        data.categories.length &&
+          !currentCategoryId &&
+          setCurrentCategoryId(data.categories[0].id);
       },
       onSettled: () => {
         events?.onSettled && events.onSettled();

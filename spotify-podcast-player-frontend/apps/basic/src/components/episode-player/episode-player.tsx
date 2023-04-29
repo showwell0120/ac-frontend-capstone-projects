@@ -17,7 +17,6 @@ export function EpisodePlayer(props: EpisodePlayerProps) {
     setEmbedController,
     destroyPlayer
   } = usePlayerContext();
-  console.log(episode, embedController);
   const playerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
