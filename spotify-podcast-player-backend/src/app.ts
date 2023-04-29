@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { prisma } from './database'
 import { authenticateJWT } from './middleware'
 import { createUser, me } from './routes/users'
@@ -12,6 +13,7 @@ import {
 import { addCategoryShow, deleteCategoryShow } from './routes/categoryShows'
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 /*
