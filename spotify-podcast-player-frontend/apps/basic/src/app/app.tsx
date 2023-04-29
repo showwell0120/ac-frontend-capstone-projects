@@ -41,8 +41,8 @@ export function App() {
       <UserProvider>
         <CategoryProvider>
           <FavoriteProvider>
-            <ModalProvider>
-              <PlayerProvider>
+            <PlayerProvider>
+              <ModalProvider>
                 <Routes>
                   <Route path="/callback" element={<Callback />} />
                   <Route path="/" element={<Login />} />
@@ -50,9 +50,8 @@ export function App() {
                     <Route path="/main" element={<Main />} />
                   </Route>
                 </Routes>
-              </PlayerProvider>
-            </ModalProvider>
-            {/* END: routes */}
+              </ModalProvider>
+            </PlayerProvider>
           </FavoriteProvider>
         </CategoryProvider>
       </UserProvider>

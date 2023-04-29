@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from 'react-bootstrap/Spinner';
 import classNames from 'classnames';
@@ -27,6 +27,8 @@ export function Main(props: MainProps) {
   const {spotifyUser} = useUserContext();
   const { showModal } = useModalContext();
   const { episode } = usePlayerContext();
+
+  useEffect(() => console.log(episode), [episode]);
 
   const currentCategory = categories.find((c) => c.id === currentCategoryId);
 
@@ -57,7 +59,7 @@ export function Main(props: MainProps) {
           <div
             className={classNames(
               styles['no-data'],
-              !episode && styles['has-player']
+              episode && styles['has-player']
             )}
           >
             <NoDataView type={'category'} />
@@ -66,7 +68,7 @@ export function Main(props: MainProps) {
           <div
             className={classNames(
               styles['no-data'],
-              !episode && styles['has-player']
+              episode && styles['has-player']
             )}
           >
             <NoDataView type={'show'} onClick={handleAddShow} />
@@ -86,7 +88,7 @@ export function Main(props: MainProps) {
                 <div
                   className={classNames(
                     styles['shows-wrapper'],
-                    !episode && styles['has-player']
+                    episode && styles['has-player']
                   )}
                 >
                   {data?.shows.map((item) => (
@@ -105,9 +107,9 @@ export function Main(props: MainProps) {
             )}
           </>
         )}
-        {!episode && (
+        {episode && (
           <div className={styles['player']}>
-            <EpisodePlayer episode={episode} />
+            <EpisodePlayer />
           </div>
         )}
       </div>
