@@ -38,9 +38,7 @@ export function UserDropdown(props: UserDropdownProps) {
     return null;
   }
 
-  const handleNavigate = () => {
-    // TODO
-  };
+  const handleNavigate = () => {};
 
   return (
     <Dropdown>

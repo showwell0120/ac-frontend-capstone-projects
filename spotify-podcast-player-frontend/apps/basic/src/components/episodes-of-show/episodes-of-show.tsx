@@ -82,6 +82,7 @@ function ShowInfo({
 
 export function EpisodesOfShow(props: EpisodesOfShowProps) {
   // infinite scrolling
+  // FIXME: run twice
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery(
       ['getShowEpisodes', props.id],

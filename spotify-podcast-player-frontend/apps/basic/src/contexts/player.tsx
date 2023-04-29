@@ -1,5 +1,3 @@
-// TODO: useReducer refactoring
-
 import {
   createContext,
   useState,
