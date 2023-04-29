@@ -1,10 +1,14 @@
+import { AxiosError } from 'axios';
+import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 import {
   QueryClient,
   QueryClientProvider,
   QueryCache,
+  MutationCache,
 } from '@tanstack/react-query';
-import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 
+import FallbackRender from '../components/fallback-render/fallback-render';
 import { Login, Callback, Main, Favorites } from '../pages';
 import {
   useUserContext,
@@ -19,8 +23,17 @@ import styles from './app.module.scss';
 
 // Create a client
 const queryClient = new QueryClient({
+  mutationCache: new MutationCache({
+    onError: (error) => {
+      const response = error as AxiosError;
+      console.log(response.code);
+    },
+  }),
   queryCache: new QueryCache({
-    onError: (error, query) => {},
+    onError: (error) => {
+      const response = error as AxiosError;
+      console.log(response.code);
+    },
   }),
 });
 
@@ -36,27 +49,28 @@ function ProtectedRoute({ redirectPath = '/' }) {
 
 export function App() {
   return (
-    // Provide the client to your App
-    <QueryClientProvider client={queryClient}>
-      <UserProvider>
-        <CategoryProvider>
-          <FavoriteProvider>
-            <PlayerProvider>
-              <ModalProvider>
-                <Routes>
-                  <Route path="/callback" element={<Callback />} />
-                  <Route path="/" element={<Login />} />
-                  <Route element={<ProtectedRoute />}>
-                    <Route path="/main" element={<Main />} />
-                    <Route path="/favorites" element={<Favorites />} />
-                  </Route>
-                </Routes>
-              </ModalProvider>
-            </PlayerProvider>
-          </FavoriteProvider>
-        </CategoryProvider>
-      </UserProvider>
-    </QueryClientProvider>
+    <ErrorBoundary fallbackRender={FallbackRender}>
+      <QueryClientProvider client={queryClient}>
+        <UserProvider>
+          <CategoryProvider>
+            <FavoriteProvider>
+              <PlayerProvider>
+                <ModalProvider>
+                  <Routes>
+                    <Route path="/callback" element={<Callback />} />
+                    <Route path="/" element={<Login />} />
+                    <Route element={<ProtectedRoute />}>
+                      <Route path="/main" element={<Main />} />
+                      <Route path="/favorites" element={<Favorites />} />
+                    </Route>
+                  </Routes>
+                </ModalProvider>
+              </PlayerProvider>
+            </FavoriteProvider>
+          </CategoryProvider>
+        </UserProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -33,14 +33,18 @@ const getUser = rest.get('/api/me', (req, res, ctx) => {
 });
 
 // 建立使用者資料
-const addUser = rest.post('/api/users', (req, res, ctx) => {
-  return res(
-    ctx.json({
-      ...userData,
-      apiToken: 'cn4hr42fhajfndm3oi1ECNWIGFWEKDJOHVR',
-    })
-  );
-});
+const addUser = rest.post(
+  'https://spotify-backend.alphacamp.io/api/users',
+  (req, res, ctx) => {
+    // return res(
+    //   ctx.json({
+    //     ...userData,
+    //     apiToken: 'cn4hr42fhajfndm3oi1ECNWIGFWEKDJOHVR',
+    //   })
+    // );
+    return res(ctx.status(409));
+  }
+);
 
 // 新增收藏的 episode
 const addFavoriteEpisode = rest.post('/api/episodes', (req, res, ctx) => {

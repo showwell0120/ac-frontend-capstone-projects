@@ -1,14 +1,22 @@
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryCache,
+  MutationCache
+} from '@tanstack/react-query';
 
 import App from './app/app';
 import './styles.scss';
 
 // Bootstrap Bundle JS
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { AxiosError } from 'axios';
 
 if (import.meta.env.DEV && import.meta.env.MODE === 'dev-mock-api') {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { worker } = await import('./mocks/browser');
   worker.start();
@@ -17,9 +25,29 @@ if (import.meta.env.DEV && import.meta.env.MODE === 'dev-mock-api') {
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+// // Create a client
+// const queryClient = new QueryClient({
+//   mutationCache: new MutationCache({
+//     onError: (error) => {
+//       const response = error as AxiosError;
+//       console.log(response);
+//       throw response;
+//     },
+//   }),
+//   queryCache: new QueryCache({
+//     onError: (error) => {
+//       const response = error as Response;
+//       console.log(response);
+//     },
+//   }),
+// });
+
 const Renderer = () => (
   <BrowserRouter>
-    <App />
+    {/* <QueryClientProvider client={queryClient}> */}
+      <App />
+    {/* </QueryClientProvider> */}
   </BrowserRouter>
 );
 

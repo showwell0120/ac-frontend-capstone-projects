@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import classNames from 'classnames';
 import { Emoji } from 'emoji-picker-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import CreateCategoryButton from '../../components/create-category-button';
 import UserDropdown from '../../components/user-dropdown/user-dropdown';
@@ -61,7 +62,7 @@ export function TopBar() {
   );
 }
 
-export function LoggedInLayout({ children }: LoggedInLayoutProps) {
+export function LoggedInLayout({ children }: LoggedInLayoutProps) {  
   return (
     <div className={styles['container']}>
       <Sider />

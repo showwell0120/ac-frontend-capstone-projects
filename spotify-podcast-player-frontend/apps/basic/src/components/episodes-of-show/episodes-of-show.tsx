@@ -8,7 +8,6 @@ import { deleteShow } from '../../apis/backend-api';
 import { getShowEpisodes } from '../../apis/spotify-api';
 import { EpisodeItem } from '../episode-item/episode-item';
 import styles from './episodes-of-show.module.scss';
-import { useEffect, useRef, useState } from 'react';
 
 /* eslint-disable-next-line */
 export interface EpisodesOfShowProps
@@ -76,7 +75,6 @@ export function EpisodesOfShow(props: EpisodesOfShowProps) {
         getShowEpisodes({ id: props.id, offset: pageParam }),
       {
         getNextPageParam: (lastPage, pages) => {
-          console.log(lastPage, pages);
           if (!lastPage.next) {
             return undefined;
           }
