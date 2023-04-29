@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 import SearchInput from '../search-input/search-input'
 import ShowCard from '../show-card/show-card';  
@@ -89,8 +90,12 @@ export function ShowFinderModal({ categoryId, onSubmit }: ShowFinderModalProps) 
 
   // error handling: fallback rendering or other actions
   if(_addShow.isError) {
-    if(shouldFallback(_addShow.error as AxiosError)) {
-      throw _addShow.error;
+    const error = _addShow.error as AxiosError;
+    if (shouldFallback(error)) {
+      throw error;
+    } else if (error?.response?.status === 409) {
+      toast('此節目已加入分類中');
+      hideModal();
     }
   }
 

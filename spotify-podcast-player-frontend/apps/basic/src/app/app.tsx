@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
@@ -70,6 +71,18 @@ export function App() {
           </CategoryProvider>
         </UserProvider>
       </QueryClientProvider>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        theme="light"
+      />
     </ErrorBoundary>
   );
 }

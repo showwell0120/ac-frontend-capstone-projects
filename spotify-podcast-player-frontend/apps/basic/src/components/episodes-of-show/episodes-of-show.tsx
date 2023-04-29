@@ -2,6 +2,7 @@
 import { Button, Spinner } from 'react-bootstrap';
 import { useMutation, useInfiniteQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 import Modal from '../modal/modal';
 import { useModalContext, useCategoryContext } from '../../contexts';
@@ -36,8 +37,11 @@ function ShowInfo({
 
   // error handling: fallback rendering or other actions
   if (_deleteShow.isError) {
-    if (shouldFallback(_deleteShow.error as AxiosError)) {
-      throw _deleteShow.error;
+    const error = _deleteShow.error as AxiosError;
+    if (shouldFallback(error)) {
+      throw error;
+    } else if (error?.response?.status === 409) {
+      toast('此分類已不存在');
     }
   }
 

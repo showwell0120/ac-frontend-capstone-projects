@@ -1,6 +1,7 @@
 import Spinner from 'react-bootstrap/Spinner';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { useFavoriteContext } from '../../contexts';
 import { ReactComponent as SavedFavIcon } from '../../assets/bookmark-fill.svg';
@@ -23,14 +24,20 @@ export function FavoriteButton({ episodeId }: FavoriteButtonProps) {
 
   // error handling: fallback rendering or other actions
   if (_addFavorite.isError) {
-    if (shouldFallback(_addFavorite.error as AxiosError)) {
-      throw _addFavorite.error;
+    const error = _addFavorite.error as AxiosError;
+    if (shouldFallback(error)) {
+      throw error;
+    } else if(error?.response?.status === 409) {
+      toast('您已經將此單集加入收藏');
     }
   }
 
   if (_removeFavorite.isError) {
+    const error = _addFavorite.error as AxiosError;
     if (shouldFallback(_removeFavorite.error as AxiosError)) {
       throw _removeFavorite.error;
+    } else if (error?.response?.status === 404) {
+      toast('您並未將此單集加入收藏');
     }
   }
 

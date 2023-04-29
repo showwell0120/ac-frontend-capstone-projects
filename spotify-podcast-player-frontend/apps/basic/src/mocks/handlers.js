@@ -36,12 +36,6 @@ const getUser = rest.get('/api/me', (req, res, ctx) => {
 const addUser = rest.post(
   'https://spotify-backend.alphacamp.io/api/users',
   (req, res, ctx) => {
-    // return res(
-    //   ctx.json({
-    //     ...userData,
-    //     apiToken: 'cn4hr42fhajfndm3oi1ECNWIGFWEKDJOHVR',
-    //   })
-    // );
     return res(ctx.status(409));
   }
 );
@@ -58,16 +52,9 @@ const addFavoriteEpisode = rest.post('/api/episodes', (req, res, ctx) => {
 
 // 移除收藏的 episode
 const deleteFavoriteEpisode = rest.delete(
-  'api/episodes/:episodeId',
+  'https://spotify-backend.alphacamp.io/api/episodes/:episodeId',
   (req, res, ctx) => {
-    userData.favoriteEpisodeIds = userData.favoriteEpisodeIds.filter(
-      (id) => id !== req.params.episodeId
-    );
-    return res(
-      ctx.json({
-        success: true,
-      })
-    );
+    return res(ctx.status(404));
   }
 );
 
@@ -122,7 +109,7 @@ const addShow = rest.post(
 
 export const handlers = [
   getUser,
-  addUser,
+  // addUser,
   addFavoriteEpisode,
   deleteFavoriteEpisode,
   getCategories,

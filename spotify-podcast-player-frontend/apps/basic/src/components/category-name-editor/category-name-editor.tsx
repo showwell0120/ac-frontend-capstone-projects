@@ -4,6 +4,7 @@ import EmojiPicker, { EmojiClickData, Emoji } from 'emoji-picker-react';
 import { useMutation } from '@tanstack/react-query';
 import Spinner from 'react-bootstrap/Spinner';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 import { useModalContext, useCategoryContext } from '../../contexts';
 import { createCategory, updateCategory } from '../../apis/backend-api';
@@ -81,15 +82,21 @@ export function CategoryNameEditorModal(props: CategoryNameEditorModalProps) {
 
   // error handling: fallback rendering or other actions
   if (_createCategory.isError) {
-    if (shouldFallback(_createCategory.error as AxiosError)) {
-      throw _createCategory.error;
+    const error = _createCategory.error as AxiosError;
+    if (shouldFallback(error)) {
+      throw error;
+    } else if (error?.response?.status === 409) {
+      toast('已存在相同名稱的分類');
     }
   }
 
   // error handling: fallback rendering or other actions
   if (_updateCategory.isError) {
-    if (shouldFallback(_updateCategory.error as AxiosError)) {
-      throw _updateCategory.error;
+    const error = _updateCategory.error as AxiosError;
+    if (shouldFallback(error)) {
+      throw error;
+    } else if (error?.response?.status === 409) {
+      toast('已存在相同名稱的分類');
     }
   }
 

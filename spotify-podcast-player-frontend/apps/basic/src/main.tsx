@@ -4,10 +4,12 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './app/app';
 
-import './styles.scss';
-
 // Bootstrap Bundle JS
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+
+import 'react-toastify/dist/ReactToastify.css';
+
+import './styles.scss';
 
 if (import.meta.env.DEV && import.meta.env.MODE === 'dev-mock-api') {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
