@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { prisma } from './database'
 import { authenticateJWT } from './middleware'
 import { createUser, me } from './routes/users'
@@ -12,6 +13,16 @@ import {
 import { addCategoryShow, deleteCategoryShow } from './routes/categoryShows'
 
 const app = express()
+app.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if ('OPTIONS' == req.method) {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 app.use(express.json())
 
 /*
