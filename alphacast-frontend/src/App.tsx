@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import { ReactComponent as ViteLogo } from '../public/vite.svg'
+
 import './App.css'
+import styles from './App.module.scss';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,7 +12,7 @@ function App() {
     <>
       <div>
         <a href="https://vitejs.dev" target="_blank">
-          <ViteLogo className="logo" width={"6em"} />
+          <ViteLogo className={styles.logo} width={"6em"} />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
