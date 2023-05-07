@@ -1,25 +1,17 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-
+import { usePlayerContext } from '../../contexts';
+import FavoriteButton from '../favorite-button/favorite-button';
+import styles from './episode-player.module.scss';
 import { useEffect, useRef } from 'react';
 
-import {usePlayerContext} from '../../contexts';
-import FavoriteButton from '../favorite-button/favorite-button';
-
-import styles from './episode-player.module.scss';
-
 /* eslint-disable-next-line */
-export interface EpisodePlayerProps {
-}
+export interface EpisodePlayerProps {}
 
 // @see https://developer.spotify.com/documentation/embeds/references/iframe-api
 
 export function EpisodePlayer(props: EpisodePlayerProps) {
-  const {
-    episode,
-    embedController,
-    setEmbedController,
-    destroyPlayer
-  } = usePlayerContext();
+  const { episode, embedController, setEmbedController, destroyPlayer } =
+    usePlayerContext();
   const playerRef = useRef<HTMLDivElement>(null);
 
   console.log(episode);
@@ -28,7 +20,7 @@ export function EpisodePlayer(props: EpisodePlayerProps) {
     if (!embedController) {
       const options = {
         width: '100%',
-        height: '380',
+        height: '360',
         loading: 'lazy',
         allow:
           'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture',
@@ -51,7 +43,7 @@ export function EpisodePlayer(props: EpisodePlayerProps) {
   useEffect(() => {
     return () => {
       destroyPlayer();
-    }
+    };
   }, []);
 
   return episode ? (
