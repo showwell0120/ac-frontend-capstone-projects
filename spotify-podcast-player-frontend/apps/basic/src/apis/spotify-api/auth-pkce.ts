@@ -1,7 +1,7 @@
 export const clientID = 'b1468c2f858b43ef8ad0138f01150d98';
 export const redirectURL = import.meta.env.DEV
   ? 'http://localhost:4200/callback'
-  : 'https://ac-spotify-podcast-player.netlify.app/callback';
+  : 'https://ac-alphacast.netlify.app/callback';
 
 export async function redirectToAuthCodeFlow() {
   const verifier = generateCodeVerifier(128);
