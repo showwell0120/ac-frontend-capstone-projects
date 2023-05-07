@@ -1,14 +1,25 @@
 // Bootstrap Bundle JS
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from './App.tsx';
 import './index.css';
 
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+const Renderer = () => <App />;
+
+// dev 環境時，StrictMode 會導致 App render 兩次
+// https://vitejs.dev/guide/env-and-mode.html
+root.render(
+  import.meta.env.DEV ? (
+    <Renderer />
+  ) : (
+    <StrictMode>
+      <Renderer />
+    </StrictMode>
+  )
+);
