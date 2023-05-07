@@ -11,9 +11,6 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "dependencies": {
-    "emoji-picker-react": "^4.4.8"
-  },
   "scripts": {
     "prepare": "husky install"
   }
