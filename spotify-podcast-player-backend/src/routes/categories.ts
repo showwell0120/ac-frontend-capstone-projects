@@ -68,6 +68,13 @@ const deleteCategory = async (req, res) => {
   if (category === null) {
     res.sendStatus(404)
   } else {
+    await prisma.categoryShow.deleteMany({
+      where: {
+        userId: req.user.id,
+        categoryId: category.id,
+      },
+    })
+
     await prisma.category.delete({
       where: {
         id: category.id,
