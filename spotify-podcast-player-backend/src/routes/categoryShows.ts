@@ -1,36 +1,35 @@
 import { prisma } from '../database'
 
 const addCategoryShow = async (req, res) => {
-  const category = await prisma.category.findUnique({
-    where: {
-      id: parseInt(req.params.categoryId),
-    },
-  })
-
-  if (category === null) {
-    res.sendStatus(404)
-  } else if (category.userId !== req.user.id) {
-    res.sendStatus(403)
-  } else {
-    const count = await prisma.categoryShow.count({
+  const categoryId = parseInt(req.params.categoryId);
+  const userId = req.user.id;
+  const showId = req.body.showId;
+  try {
+    const category = await prisma.category.findUnique({
       where: {
-        userId: category.userId,
-        categoryId: category.id,
-        showId: req.body.showId,
+        id: categoryId,
       },
-    })
+    });
 
-    if (count === 0) {
-      await prisma.categoryShow.create({
-        data: {
-          userId: category.userId,
-          categoryId: category.id,
-          showId: req.body.showId,
-        },
-      })
-      res.send({ success: true })
+    if (category === null) {
+      return res.sendStatus(404);
+    } else if (category.userId !== userId) {
+      return res.sendStatus(403);
+    } 
+  
+    await prisma.categoryShow.create({
+      data: {
+        userId,
+        categoryId,
+        showId,
+      },
+    });
+    res.send({ success: true });
+  } catch (error) {
+    if (error.code === 'P2002') { // Prisma unique constraint violation error code
+      res.sendStatus(409);
     } else {
-      res.sendStatus(409)
+      res.sendStatus(500);
     }
   }
 }
